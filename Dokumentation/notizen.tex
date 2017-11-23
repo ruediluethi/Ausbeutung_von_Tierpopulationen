@@ -1,0 +1,15 @@
+\documentclass[11pt,a4paper]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+	\begin{flalign*}
+		x_{n+1} &= x_{n} + r \left( 1- \frac{x_{n}}{K} \right) x_{n} = x_{n} \left( 1 + r\left( 1 - \frac{x_{n}}{K} \right) \right) \\
+		x_{n+1} &= x_{n} + r \left( 1- \frac{x_{n}}{K} \right) x_{n} - Ex_{n} = x_{n} \left( 1 + r\left( 1 - \frac{x_{n}}{K} \right) - E \right) \\
+		x_{n+1} &= r \left( 1 - \frac{x_{n}}{K} \right) x_{n} \\
+	\end{flalign*}
+
+\end{document}	
