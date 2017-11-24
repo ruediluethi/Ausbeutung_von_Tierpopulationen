@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+This XML defines the animals in the calculated world
+-->
+
+<simulation duration="1000" delta="1">
+    <animal name="Blauwal">
+        <maximum_age age="100"/>
+        <reproduction r="1.6"/>
+    </animal>
+    <cell x="0" y="0">
+        <limit K="1000"/>
+        <inhabitant name="Blauwal" amount="10"/>
+    </cell>
+</simulation>
+
+
