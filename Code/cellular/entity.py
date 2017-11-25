@@ -4,3 +4,5 @@ class Entity:
         self.y = y
         self.species = species
         self.born = born
+    def __str__(self):
+        return f"Entity Species {self.species}, born {self.born}, Position {self.x} {self.y}"

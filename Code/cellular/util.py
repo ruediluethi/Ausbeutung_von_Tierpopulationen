@@ -11,6 +11,14 @@ def increase_by_factor(n, fac):
     else:
         return int(f+1)
 
+class adult_checker:
+    def __init__(self, species, time):
+        self.species = species
+        self.time = time
+    def is_adult(self,entity):
+        return True if not self.species.reproduction_age else \
+            self.time-entity.born >= self.species.reproduction_age
+
 if __name__ == '__main__':
     a = 11
     b = 1.3
