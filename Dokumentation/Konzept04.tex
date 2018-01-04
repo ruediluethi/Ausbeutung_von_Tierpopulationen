@@ -38,9 +38,9 @@
 	Nun sollen unsere zwei Arten auch miteinander interagieren können. Dazu führen wir drei weitere Variablen ein: \( \alpha \) definiert die Wahrscheinlichkeit einer Begegnung von A mit B in unserem Biotop. Sie ist alleine von der Gestalt des Biotops abhängig und für beide Arten gleich. Zusätzlich beschreiben die Variablen \( l_{a} \) und \( l_{b} \) den Effekt der Begegnung für die jeweilige Spezies. Damit erhalten wir:
 	 \begin{flalign*}
 		\textrm{Spezies A: } \qquad &
-		a_{n+1} = a_{n} + r_{a} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) a_{n} + l_{a}~\alpha~x_{a}~x_{b} \\
+		a_{n+1} = a_{n} + r_{a} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) a_{n} + l_{a}~\alpha~a_{n}~b_{n} \\
 		\textrm{Spezies B: } \qquad &
-		b_{n+1} = b_{n} + r_{b} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) b_{n} + l_{b}~\alpha~x_{a}~x_{b}
+		b_{n+1} = b_{n} + r_{b} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) b_{n} + l_{b}~\alpha~a_{n}~b_{n}
 	\end{flalign*}	
 	Dies führt uns zu den allgemein bekannten Lotka-Volterra-Gleichungen\cite{LotkaVolterra} und zu einem Räuber-Beute-System.
 	

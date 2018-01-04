@@ -1,31 +1,53 @@
 clear;
 close all;
 
-K = 100; % biotop limit
-alpha = 0.01; % meeting chance
+K = 300; % Biotop Limit
 
-% reproduction rate
-ra = 0.1;
-rb = -0.1; % die rate for predator
+% Verhalten der Arten ohne Kontakt
+rv = 0.2; % Reproduktionsrate vom Plankton
+rw = 0.2; % Sterberate der Wale (wenn sie kein Futter finden)
 
-% effect when meet
-la = -0.1; % die
-lb = 0.1; % reproduce after the meal
+% Was passiert bei der Begegnung?
+alpha = 0.001; % Wahrscheinlichkeit einer Begegnung
+lv = 0.2; % Sterberate vom Plankton 
+lw = 0.2; % Reproduktion wenn sich der Wal satt gegessen hat
 
-a = [1];
-b = [1];
+v = [100];
+w = [100];
 
 delta_t = .1;
-duration = 500;
+duration = 300;
 t = 1:duration/delta_t;
 for i = [t(1):t(end-1)]
 
-    delta_a = ra*(1- (a(end)+b(end))/K)*a(end) + la*alpha*a(end)*b(end);
-    delta_b = rb*(1- (a(end)+b(end))/K)*b(end) + lb*alpha*a(end)*b(end);
+    delta_v = +rv*(1-(v(end)+w(end))/K)*v(end) - lv*alpha*v(end)*w(end);
+    delta_w = -rw*(1-(v(end)+w(end))/K)*w(end) + lw*alpha*v(end)*w(end);
     
-    a(end+1) = a(end) + delta_a*delta_t;
-    b(end+1) = b(end) + delta_b*delta_t;
+    v(end+1) = v(end) + delta_v*delta_t;
+    w(end+1) = w(end) + delta_w*delta_t;
     
 end
 
-plot(t,a,t,b);
+plot(t*delta_t,w,'k',t*delta_t,v,'k--');
+legend('Räuber','Beute');
+legend('boxoff');
+legend('Location','northoutside');
+xlabel('Zeit');
+ylabel('Anzahl Tiere');
+
+fig = gcf;
+fig.PaperUnits = 'centimeters';
+fig.PaperPosition = [0 0 7 7];
+print(['../Dokumentation/Diagramme/beute_raeuber_oszillation.png'],'-dpng','-r300');
+
+plot(w,v,'k');
+legend('Räuber Beute Korrelation');
+legend('boxoff');
+legend('Location','northoutside');
+xlabel('Räuber');
+ylabel('Beute');
+
+fig = gcf;
+fig.PaperUnits = 'centimeters';
+fig.PaperPosition = [0 0 7 7];
+print(['../Dokumentation/Diagramme/beute_raeuber_korrelation.png'],'-dpng','-r300');

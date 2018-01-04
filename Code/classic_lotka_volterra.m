@@ -33,5 +33,10 @@ for i = [t(1):t(end-1)]
     predator(end+1) = predator(end) -  delta_predator*delta_t;
 end
 
+subplot(1,2,1);
 p = plot(t,prey,t,predator);
+legend('prey','predator');
 axis([0 duration/delta_t 0 biotop_size]);
+
+subplot(1,2,2);
+plot(prey,predator,'k');
