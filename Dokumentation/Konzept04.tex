@@ -4,30 +4,50 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{geometry}
+\geometry{
+  left=3cm,
+  right=3cm,
+  top=2cm,
+  bottom=3cm
+}
 
 \title{Ausbeutung von Tierpopulationen \\ \textbf{Konzept} }
 \author{Jannik Simon Münz, Ruedi Lüthi}
 
 \begin{document}
-
+	\bibliographystyle{plain}
+	
 	\maketitle
 	
-	\begin{itemize}
-		\item Verhalten von mehreren Wachstumspopulationen, welche von einander abhängen. Im wesentlichen sind dabei die Parameter \(r\) und \(K\) Funktionen in Abhängigkeit der anderen Populationsgrösse. 
-		
-	Räuber, Beute? Lotka-Volterra
-		
-		\item Zusammenfassen von mehreren Populationen in Zellen und definieren von verschiedenen Schnittstellen. So können beispielsweise Populationen von einer Zelle zu einer anderen Wandern.
-		
-		\item Das Model mit realen Daten prüfen. Dazu müssen passende Messdaten rechechiert werden. Beispielsweise
-			\begin{itemize}
-				\item Fischbestände in den Weltmeeren, mögliche Quellen: WWF, Greenpeace
-				\item Vogelbestände (wie wird dabei die jährliche Wanderung simuliert? nützt dabei evtl. das Zellenmodel?), mögliche Quellen: Tierschutzverbände, Vogelwarte Sempach (CH)
-				\item Zellenwachstum in Bioreaktoren, mögliche Quellen: Studiengang Biotechnologie (Hochschule zhaw Wädenswil CH)
-			\end{itemize}
-			
-		\item Wie würde ein Model ausschauen wo jeweils einzelne Individuen simuliert werden? Inwiefern würde ein solches Model mit dem logistischen Wachstum korrelieren?
-		
-	\end{itemize}
+	Da sich die Blauwale mit konstanter Fangintensität prächtig entwickeln, wollen wir unser Model um eine weitere Spezies erweitern. Vorerst lassen wir beide unabhängig voneinander anwachsen:
+	\begin{flalign*}
+		\textrm{Spezies A: } \qquad &
+		a_{n+1} = a_{n} + r_{a}~a_{n}  \\
+		\textrm{Spezies B: } \qquad &
+		b_{n+1} = b_{n} + r_{b}~b_{n}
+	\end{flalign*}
+	
+	Um dem Wachstum eine Grenze zu setzen, nutzen wir wie in der logistischen Wachstumsgleichung beschrieben, eine Umweltkapazität \( K \). Kombiniert mit den Summen der beiden Populationen ergeben sich dann folgende Gleichungen:
+	\begin{flalign*}
+		\textrm{Spezies A: } \qquad &
+		a_{n+1} = a_{n} + r_{a} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) a_{n} \\
+		\textrm{Spezies B: } \qquad &
+		b_{n+1} = b_{n} + r_{b} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) b_{n}
+	\end{flalign*}
+	
+	Nun sollen unsere zwei Arten auch miteinander interagieren können. Dazu führen wir drei weitere Variablen ein: \( \alpha \) definiert die Wahrscheinlichkeit einer Begegnung von A mit B in unserem Biotop. Sie ist alleine von der Gestalt des Biotops abhängig und für beide Arten gleich. Zusätzlich beschreiben die Variablen \( l_{a} \) und \( l_{b} \) den Effekt der Begegnung für die jeweilige Spezies. Damit erhalten wir:
+	 \begin{flalign*}
+		\textrm{Spezies A: } \qquad &
+		a_{n+1} = a_{n} + r_{a} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) a_{n} + l_{a}~\alpha~a_{n}~b_{n} \\
+		\textrm{Spezies B: } \qquad &
+		b_{n+1} = b_{n} + r_{b} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) b_{n} + l_{b}~\alpha~a_{n}~b_{n}
+	\end{flalign*}	
+	Dies führt uns zu den allgemein bekannten Lotka-Volterra-Gleichungen\cite{LotkaVolterra} und zu einem Räuber-Beute-System.
+	
+	Um einen zusätzlichen Blickwinkel auf das Populationsverhalten dieses Räuber-Beute Systems zu erhalten, möchten wir zusätzlich einen Ansatz verfolgen, welcher einzelne Individuen oder Zellen von kleineren Gruppen simuliert. Als Grundlage dafür soll ein zellulärer Automat\cite{ZellulaererAutomat} dienen. Beiden Modelle möchten wir vergleichen und analysieren in welchen Bereichen diese miteinander korrelieren.
+	
+	\bibliography{literatur}
+	
+	\noindent\textit{Selbstverständlich werden diese Wikipedia Quellen noch durch seriöse wissenschaftliche Werke ersetzt.}
 
 \end{document}	

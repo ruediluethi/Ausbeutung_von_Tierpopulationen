@@ -7,9 +7,17 @@
 \begin{document}
 
 	\begin{flalign*}
-		x_{n+1} &= x_{n} + r \left( 1- \frac{x_{n}}{K} \right) x_{n} = x_{n} \left( 1 + r\left( 1 - \frac{x_{n}}{K} \right) \right) \\
-		x_{n+1} &= x_{n} + r \left( 1- \frac{x_{n}}{K} \right) x_{n} - Ex_{n} = x_{n} \left( 1 + r\left( 1 - \frac{x_{n}}{K} \right) - E \right) \\
-		x_{n+1} &= r \left( 1 - \frac{x_{n}}{K} \right) x_{n} \\
+		\textrm{Konzept: } & \\
+		\textrm{Beute: } \qquad &
+		a_{n+1} = a_{n} + r_{a} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) a_{n} + l_{a}~\alpha~a_{n}~b_{n}  \\
+		\textrm{Räuber: } \qquad &
+		b_{n+1} = b_{n} + r_{b} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) b_{n} + l_{b}~\alpha~a_{n}~b_{n}  \\
+		\textrm{Klassisch: } & \\
+		\textrm{Beute: } \qquad &
+		k = \frac{a_{n}+b_{n}}{K}  \\
+		& r^{*}_{a} = r_{a} + l_{b}b_{n}  \\
+		& a_{n+1} = a_{n} + r^{*}_{a}(1-k)a_{n}  \\
+		& a_{n+1} = a_{n} + (r_{a} + l_{b}b_{n})(1-k)a_{n} = a_{n} + r_{a}(1-k)a_{n} + l_{b}(1-k)a_{n}b_{n} \\
 	\end{flalign*}
-	\text{\textbf{Hallo Welt}}
+
 \end{document}	
