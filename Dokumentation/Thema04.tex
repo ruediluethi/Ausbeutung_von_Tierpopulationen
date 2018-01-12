@@ -113,8 +113,6 @@
 
 	Für \(E=\frac{r}{2}\) ist der Schnittpunkt zwischen Zuwachs und Ertrag genau im Maximum der Zuwachsfunktion. Für \(E=\frac{r}{3}\) hingegen leicht daneben, somit wird hierfür das Maximum nicht erreicht.
 	
-	\newpage	
-	
 	\section{\uppercase{Räuber und Beute}}\label{sec:Raeuber_Beute}
 	
 	Zusätzlich zu den Walen wird eine weitere Spezies betrachtet, welche in Wechselwirkung mit den Walen steht, beispielsweise Plankton. Zur Vereinfachung werden im nachfolgenden Text die Population der Wale als Räuber \(w(t)\) und das Plankton als Beute \(v(t)\) bezeichnet. Die Population beider Arten verhält sich wie in Abschnitt \ref{sec:Wachstumsgleichung} beschrieben, wobei jedoch das Populationsmaximum jeweils von der Summe beider Arten abhängt:
@@ -125,6 +123,8 @@
 
 	Dabei beschreibt der Faktor \(r_v\) die Reproduktionsrate der Beute (positives Vorzeichen) und der Faktor \(r_w\) die Sterberate der Räuber (negatives Vorzeichen), denn diese verhungern falls sie kein Futter finden.
 
+	\newpage
+
 	Nun stehen diese zwei Arten miteinander in Wechselwirkung. Dabei beschreibt der Faktor \(\alpha\) die Wahrscheinlichkeit einer Begegnung. Dieser ist einzig von der Gestalt des Biotops anhängig und für beide Arten gleich. Zusätzlich beschreibt die Konstante \(l_{v}\) wie viele Beutetiere bei der Begegnung gefressen werden (negatives Vorzeichen) und die Konstante \(l_{w}\) wie stark sich die Räuber nach der Mahlzeit vermehren (positives Vorzeichen). Mit diesen zusätzlichen Variablen ergeben sich folgende Gleichungen:
 	 \begin{align*}
 		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v \\
@@ -133,25 +133,77 @@
 
 	Werden diese zwei Gleichungen mit der allgemein bekannten Lotka-Volterra Gleichung \cite{PredatorPrey} Seite 3 verglichen, ist leicht zu erkennen, dass diese damit identisch sind.
 
-	\newpage
-
 	Wie man in Abbildung \ref{fig:beute_raeuber_oszillation} erkennen kann, ist mit entsprechenden Parametern ein Schwingungsverhalten zu beobachten. Wobei die Phasen der Schwingungen der beiden Arten jeweils verschoben sind.
 	
-	Parameter benennen...
-
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=5.5cm]{Diagramme/beute_raeuber_oszillation.png}
-  		\caption{Population von Räuber und Beute als Funktion der Zeit.}
+  		\caption{Population von Räuber und Beute als Funktion der Zeit mit \(r_w = r_v = l_v = l_w = 0.2; \alpha = 0.001\).}
   		\label{fig:beute_raeuber_oszillation}
+	\end{figure}
+	
+	Um die Gleichgewichtspunkte der Gleichung für die Räuber zu untersuchen, setzen wir die Ableitung \(\dot{w}\) gleich null:
+	\begin{align*}
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v &\stackrel{!}{=} 0\\
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) + l_w \cdot \alpha \cdot v &= 0\\
+		\frac{l_w \cdot \alpha \cdot v}{r_w} &= 1 - \frac{w}{K}-\frac{v}{K}\\
+		\frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot v - v \cdot r_w}{r_w} &= w
+	\end{align*}
+	
+	Sei nun \(v=0\), so gilt für den Gleichgewichtspunkt der Räuber:
+	\begin{align*}
+		w = \frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot 0 - 0 \cdot r_w}{r_w} = \frac{K \cdot r_w}{rw} = K
+	\end{align*}
+	
+	Um mehr Kontrolle über diesen Gleichgewichtspunkt zu erhalten, wird die Gleichung um einen weiteren Proportionalitätsfaktor \( \beta \) erweitertet:
+	 \begin{align*}
+		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w
+	\end{align*}
+	
+	\noindent
+	Damit gilt für den Gleichgewichtspunkt:
+	\begin{align*}
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w &\stackrel{!}{=} 0\\
+		\frac{K \cdot r_w - K \cdot l_w \cdot \alpha \cdot v + K \cdot \beta - v \cdot r_w}{r_w} &= w
+	\end{align*}
+	
+	\noindent
+	Womit wiederum für \(v=0\) gilt:
+	\begin{align*}
+		w = \frac{K \cdot r_w + K \cdot \beta}{r_w} = K \left( \frac{r_w + \beta}{r_w} \right) = K \left( 1 + \frac{\beta}{r_w} \right)
+	\end{align*}
+	
+	Es existiert weiterhin ein Gleichgewichtspunkt, welcher neu aber auch von \(r_w\) und \(\beta\) abhängt.
+	
+	Wie in Abbildung \ref{fig:beute_raeuber_oszillation_mit_b} zu sehen ist, kann die neue Gleichung mit geeigneten Parametern genauso zum Schwingen gebracht werden.
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=5.5cm]{Diagramme/beute_raeuber_oszillation_mit_b.png}
+  		\caption{Schwingungsverhalten der erweiterten Gleichungen mit \(r_v=0.178; r_w=0.169; l_v=0.106; l_w=0.261; \alpha = 0.001; \beta = 0.021; \).}
+  		\label{fig:beute_raeuber_oszillation_mit_b}
 	\end{figure}
 	
 	\newpage
 	
 	\section{\uppercase{Agentenbasierte Modellierung}}
+
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=5.5cm]{Diagramme/agent_model_start.png}
+  		\caption{bla bla bla.}
+  		\label{fig:agent_model_start}
+	\end{figure}
 	
 	\newpage
-	bla
+
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=5.5cm]{Diagramme/agent_model_oscillation.png}
+  		\caption{bla bla bla.}
+  		\label{fig:agent_model_oscillation}
+	\end{figure}
+
 	\newpage
 	
 	\section{\uppercase{Der zelluläre Automat}}
