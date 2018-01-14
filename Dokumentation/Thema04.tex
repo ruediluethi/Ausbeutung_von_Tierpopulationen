@@ -194,7 +194,7 @@
 	
 	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte die Rechenzeit für die selben Werte auf 52s reduziert werden.
 	
-	Die in Abschnitt \ref{sec:Ergebnis_Agent_Model} besprochenen Ergebnisse sind mittels folgendem durch Pseudocodes beschrieben verhalten entstanden:
+	Die in Abschnitt \ref{sec:Ergebnis_Agent_Model} besprochenen Ergebnisse sind mittels folgendem durch Pseudocode beschriebenen Verhaltens entstanden:
 	
 	\begin{small}
 	\begin{verbatim}
@@ -223,14 +223,14 @@ Für jeden Zeitschritt:
     Ist die Tierart ein Beutetier:
       delta_pop = rv*(1-(Total aller Tiere/K))*v_erw.
 
-    Ist die delta_pop positiv:
+    Ist delta_pop positiv:
       Für jedes neugeborene Tier:
         Ein neues Tier wird geboren und 
         die aktuelle Zeit als Geburtstermin 
         wird gespeichert.
 
     Ist die Veränderung in der Population negativ:
-      Für jedes verhungerte Tier:
+      Für jedes sterbende Tier:
         Ein zufälliges Tier stirbt.	
  		
 	\end{verbatim}
