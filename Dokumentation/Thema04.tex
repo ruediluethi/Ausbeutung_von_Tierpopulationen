@@ -26,13 +26,13 @@
 
 \begin{document}
 
-	\title{Ausbeutung von Tierpopulationen\subtitle{Wachstumsgleichungen im Vergleich mit einem zellulären Automaten} }
+	\title{Ausbeutung von Tierpopulationen\subtitle{Wachstumsgleichungen im Vergleich zu einer\\agentenbasierten Modulation und einem zellulären Automaten} }
 	
 	\author{\authorname{Jannik Simon Münz und Ruedi Lüthi}}
 	
-	\keywords{bla bla}
+	\keywords{Wachstum, Räuber und Beute, agentenbasierte Modellierung, Zellulärer Automat, WATOR}
 
-	\abstract{bla bla bla}	
+	\abstract{In dem nachfolgenden Bericht wird die konkrete Implementation einer agentenbasierten Modellierung sowie die eines zellulären Automaten beschrieben. Dabei werden die Resultate der beiden Modelle mit dem klassischen Räuber-Beute Modell verglichen. Dabei konnte beim Betrachten aller Modelle jeweils immer ein Schwingungsverhalten beobachtet werden.}
 	
 	\onecolumn \maketitle \normalsize \vfill
 
@@ -84,8 +84,6 @@
 		\frac{r}{2} \cdot K \cdot \left(1 - \frac{r}{2}\cdot\frac{1}{r}\right) = \frac{r \cdot K}{4}
 	\end{align*}
 	
-	\newpage	
-	
 	Die nachfolgenden Abbildungen \ref{fig:zuwachs_etrag_auf_zeit1} und \ref{fig:zuwachs_etrag_auf_zeit2} zeigen den Zuwachs und den Ertrag über die Zeit für zwei unterschiedliche \(E\)'s.
 	\begin{figure}[!h]
   		\centering
@@ -113,6 +111,8 @@
 
 	Für \(E=\frac{r}{2}\) ist der Schnittpunkt zwischen Zuwachs und Ertrag genau im Maximum der Zuwachsfunktion. Für \(E=\frac{r}{3}\) hingegen leicht daneben, somit wird hierfür das Maximum nicht erreicht.
 	
+	\newpage
+	
 	\section{\uppercase{Räuber und Beute}}\label{sec:Raeuber_Beute}
 	
 	Zusätzlich zu den Walen wird eine weitere Spezies betrachtet, welche in Wechselwirkung mit den Walen steht, beispielsweise Plankton. Zur Vereinfachung werden im nachfolgenden Text die Population der Wale als Räuber \(w(t)\) und das Plankton als Beute \(v(t)\) bezeichnet. Die Population beider Arten verhält sich wie in Abschnitt \ref{sec:Wachstumsgleichung} beschrieben, wobei jedoch das Populationsmaximum jeweils von der Summe beider Arten abhängt:
@@ -123,8 +123,6 @@
 
 	Dabei beschreibt der Faktor \(r_v\) die Reproduktionsrate der Beute (positives Vorzeichen) und der Faktor \(r_w\) die Sterberate der Räuber (negatives Vorzeichen), denn diese verhungern falls sie kein Futter finden.
 
-	\newpage
-
 	Nun stehen diese zwei Arten miteinander in Wechselwirkung. Dabei beschreibt der Faktor \(\alpha\) die Wahrscheinlichkeit einer Begegnung. Dieser ist einzig von der Gestalt des Biotops anhängig und für beide Arten gleich. Zusätzlich beschreibt die Konstante \(l_{v}\) wie viele Beutetiere bei der Begegnung gefressen werden (negatives Vorzeichen) und die Konstante \(l_{w}\) wie stark sich die Räuber nach der Mahlzeit vermehren (positives Vorzeichen). Mit diesen zusätzlichen Variablen ergeben sich folgende Gleichungen:
 	 \begin{align*}
 		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v \\
@@ -132,6 +130,8 @@
 	\end{align*}
 
 	Werden diese zwei Gleichungen mit der allgemein bekannten Lotka-Volterra Gleichung \cite{PredatorPrey} Seite 3 verglichen, ist leicht zu erkennen, dass diese damit identisch sind.
+	
+	\newpage
 
 	Wie man in Abbildung \ref{fig:beute_raeuber_oszillation} erkennen kann, ist mit entsprechenden Parametern ein Schwingungsverhalten zu beobachten. Wobei die Phasen der Schwingungen der beiden Arten jeweils verschoben sind.
 	
@@ -153,77 +153,121 @@
 	Sei nun \(v=0\), so gilt für den Gleichgewichtspunkt der Räuber:
 	\begin{align*}
 		w = \frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot 0 - 0 \cdot r_w}{r_w} = \frac{K \cdot r_w}{rw} = K
-	\end{align*}
+	\end{align*}	
 	
-	Um mehr Kontrolle über diesen Gleichgewichtspunkt zu erhalten, wird die Gleichung um einen weiteren Proportionalitätsfaktor \( \beta \) erweitertet:
-	 \begin{align*}
-		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w
-	\end{align*}
-	
-	\noindent
-	Damit gilt für den Gleichgewichtspunkt:
-	\begin{align*}
-		-r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w &\stackrel{!}{=} 0\\
-		\frac{K \cdot r_w - K \cdot l_w \cdot \alpha \cdot v + K \cdot \beta - v \cdot r_w}{r_w} &= w
-	\end{align*}
-	
-	\noindent
-	Womit wiederum für \(v=0\) gilt:
-	\begin{align*}
-		w = \frac{K \cdot r_w + K \cdot \beta}{r_w} = K \left( \frac{r_w + \beta}{r_w} \right) = K \left( 1 + \frac{\beta}{r_w} \right)
-	\end{align*}
-	
-	Es existiert weiterhin ein Gleichgewichtspunkt, welcher neu aber auch von \(r_w\) und \(\beta\) abhängt.
-	
-	Wie in Abbildung \ref{fig:beute_raeuber_oszillation_mit_b} zu sehen ist, kann die neue Gleichung mit geeigneten Parametern genauso zum Schwingen gebracht werden.
-	
-	\begin{figure}[!h]
-  		\centering
- 		\includegraphics[width=5.5cm]{Diagramme/beute_raeuber_oszillation_mit_b.png}
-  		\caption{Schwingungsverhalten der erweiterten Gleichungen mit \(r_v=0.178; r_w=0.169; l_v=0.106; l_w=0.261; \alpha = 0.001; \beta = 0.021; \).}
-  		\label{fig:beute_raeuber_oszillation_mit_b}
-	\end{figure}
+	Somit bleibt die Population der Räuber bei \(w=K\) und \(v=0\) konstant. Dies entspricht aber keinesfalls der Realität, denn die Räuber können ja jeweils nur mit genügend Beute überleben. Dieses Beispiel zeigt somit eine theoretische Schwachstelle unseres Modells.
 	
 	\newpage
 	
 	\section{\uppercase{Agentenbasierte Modellierung}}
 	
-	In der agentenbasierten Modellierung werden Gleichungen im Gegensatz zur analytischen Modellierung mit einzelnen Individuen gelöst.
-	Damit können zusätzlich real auftretende Effekte wie Überalterung oder ein Mindestalter zur Fortpflanzung berücksichtigt werden.\\
+	In der agentenbasierten Modellierung werden Gleichungen im Gegensatz zur analytischen Modellierung mit einzelnen Individuen gelöst. Damit können zusätzlich real auftretende Effekte wie Überalterung oder ein Mindestalter zur Fortpflanzung berücksichtigt werden.
+	
 	Das agentenbasiertes Modell wurde speziell auf den Beute-Räuber Effekt angewendet, da dieser Effekt analytisch nur schwer zu lösen ist und Effekte wie Überalterung dort eine wichtige Rolle spielen. Die Individuen erhalten durch ihr Alter spezielle Eigenschaften:
 	\begin{itemize}
-		\item Hat das Individuum das maximale Alter überschritten, stirbt es. Es isst also nicht mehr und ist nicht in der Lage, sich Fortzupflanzen.
+		\item Hat das Individuum das maximale Alter überschritten, stirbt es. Es isst also nicht mehr und ist nicht in der Lage, sich Fortzupflanzen. Die Anzahl der Tiere welche durch überschreiten der Altersgrenze sterben werden nachfolgend mit \(w_{zu~alt}\) bezeichnet.
 		\item Ist das Individuum unter einem gewissen Alter, wird es bei der Fortpflanzung nicht berücksichtigt, es frisst aber die normale Menge.
-		\item Jedes Individuum zwischen dem Mindestalter zur Fortpflanzung und dem maximalen Alter frisst (als Räuber) andere Tiere und ist in der Lage, sich fortzupflanzen.
+		\item Jedes Individuum zwischen dem Mindestalter zur Fortpflanzung und dem maximalen Alter frisst (als Räuber) andere Tiere und ist in der Lage, sich fortzupflanzen. Die Anzahl dieser Tiere wird nachfolgend als \(w_{erw}\) oder \(v_{erw}\) bezeichnet.
 	\end{itemize}
-	Die Menge der gefressenen Tiere $k$ wird wie wie bei den allgemeinen Formeln zum Beute-Räuber Modell bestimmt:
-	$$k = l_v\cdot \alpha \cdot w_{lebend} \cdot v_{lebend}$$
-	Bei der Fortpflanzung gelten auch die selben Formeln wie beim Beute-Räuber Modell, allerdings werden dabei nur die erwachsenen Individuen betrachtet. Außerdem wird das Verhungern von Tieren durch Einführung einer Menge $\beta$, die jedes Tier in einer Zeiteinheit zum Überleben fressen muss, berücksichtigt:
-	$$\dot{w} = -r_w \cdot \left(1-\frac{w_{lebend} + v_{lebend}}{K}\right)\cdot w_{erwachsen} + l_v\cdot \alpha \cdot v_{lebend}\cdot w_{lebend} - \beta \cdot w_{lebend}$$
-	$$\dot{v} = r_v \cdot \left(1-\frac{w_{lebend} + v_{lebend}}{K}\right)\cdot v_{erwachsen} - k$$
+	
+	Damit gilt für die Veränderung der Population der Räuber folgende Gleichung:
+	\begin{align*}
+		\dot{w} = -w_{zu~alt} + l_w \cdot \alpha \cdot w_{erw} \cdot v - \beta \cdot w
+	\end{align*}
+	Wobei die Proportionalitätskonstante \(\beta\) die Anzahl der Tiere beschreibt, welche durch natürliche Umwelteinflüsse sterben.
+
+	Da auch die Beutetiere ein minimales Alter für die Fortpflanzung haben, muss die Gleichung aus Abschnitt \ref{sec:Raeuber_Beute} wie folgt geändert werden:
+	\begin{align*}
+		\dot{v} &= +r_v \cdot \left(1 - \frac{w+v}{K} \right) \cdot v_{erw} - l_v \cdot \alpha \cdot w_{erw} \cdot v
+	\end{align*}
+	
+		Somit wird eine Tierart durch folgende Konstanten definiert:\\
+	Maximales Alter: Überschreitet das individuelle Alter des Tieres diesen Wert, so stirbt es.\\
+	Erwachsenenalter: Sobald das Tier diesen Alterswert erreicht hat, kann es sich fortpflanzen. \\
+	\(l_w\) (nur Räuber): Reproduktionsrate nach einem Mahl.\\
+	\(\beta\) (nur Räuber): Sterberate durch Umwelteinflüsse. \\
+	\(r_v\) (nur Beute): Reproduktionsrate. \\
+	\(l_v\) (nur Beute): Sterberate durch gefressen werden. \\
 
 	\subsection{Implementation}
-	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, der ihr Alter angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
+	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, welcher der Zeitpunkt ihrer Geburt angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
 	
 	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte die Rechenzeit für die selben Werte auf 52s reduziert werden.
 	
-	Die verwendeten Rechenregeln sind nicht streng deterministisch. Die Auswahl der Tiere, die gefressen werden, erfolgt rein zufällig. Darum kann es, beim erneuten Ausführen der Simulation, zu minimal unterschiedlichen Ergebnissen führen. Den Code zur Simulation ist auf dem GitHub Repository \cite{GitHub} zu finden.
+	Die in Abschnitt \ref{sec:Ergebnis_Agent_Model} besprochenen Ergebnisse sind mittels folgendem durch Pseudocodes beschrieben verhalten entstanden:
+	
+	\begin{small}
+	\begin{verbatim}
+Für jeden Zeitschritt:
+  Erhöhe die aktuelle Zeit um delta_t
+
+  Für jede Tierart:
+    Für alle Tiere wo die Differenz von der 
+    aktuellen Zeit zum Geburtszeitpunkt größer
+    ist als das maximale Alter der Tierart:
+      Das Tier stirbt.
+
+    w = Anzahl der Tiere der Tierart.
+    w_erw = Anzahl Tiere bei denen die 
+    Summe von Geburtstermin plus Erwachsenenalter 
+    größer ist als die aktuelle Zeit.
+
+    Ist die Tierart ein Räuber:
+      v = Anzahl der Beutetiere.
+      Anzahl gefressener Beutetiere = w*v*alpha*lv
+      Für jedes Beutetier welches gefressen wird:
+        Ein zufälliges Beutetier stirbt.
+            
+      delta_pop = lw*alpha*w_erw*v - beta*w.
+
+    Ist die Tierart ein Beutetier:
+      delta_pop = rv*(1-(Total aller Tiere/K))*v_erw.
+
+    Ist die delta_pop positiv:
+      Für jedes neugeborene Tier:
+        Ein neues Tier wird geboren und 
+        die aktuelle Zeit als Geburtstermin 
+        wird gespeichert.
+
+    Ist die Veränderung in der Population negativ:
+      Für jedes verhungerte Tier:
+        Ein zufälliges Tier stirbt.	
+ 		
+	\end{verbatim}
+	\end{small}
+	
+	Die verwendeten Rechenregeln sind nicht streng deterministisch. Die Auswahl der Tiere, die gefressen werden, erfolgt rein zufällig. Darum kann es, beim erneuten Ausführen der Simulation, zu minimal unterschiedlichen Ergebnissen führen.
+	
+	\subsection{Ergebnis}\label{sec:Ergebnis_Agent_Model}
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=5.5cm]{Diagramme/agent_model_damped.png}
+  		\caption{Die Anzahl der Räuber und Beute Individuen in pendelt sich mittels gedämpfter Schwingung ein.}
+  		\label{fig:agent_model_damped}
+	\end{figure}
+	
+	In dem in Abbildung \ref{fig:agent_model_oscillation} dargestellten Diagramm sieht man eine ungebremste Schwingung. Diese tritt nur in sehr kleinen Wertebereichen auf. Meistens ist die Schwingung wie in Abbildung \ref{fig:agent_model_damped} gedämpft und pendelt sich auf einen festen Wert ein.
+	
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=5.5cm]{Diagramme/agent_model_oscillation.png}
-  		\caption{bla bla bla.}
+  		\caption{Beispiel einer ungebremste Schwingung der Anzahl Räuber und Beute Individuen. Im dargestellten Ergebnis wurden 45\% der Beute aufgefressen und 55\% starben am Alter.}
   		\label{fig:agent_model_oscillation}
 	\end{figure}
-	\subsection{Ergebnis}
-	In dem im Diagramm dargestellten Beispiel sieht man eine ungebremste Schwingung. Diese tritt nur in sehr kleinen Wertebereichen auf. Meistens ist die Schwingung gedämpft und pendelt sich auf einen festen Wert ein. Im dargestellten Ergebnis wurden 45\% der Beute aufgefressen und 55\% starben am Alter.\\
-	Auffallend bei den Diagrammen ist, dass das maximale Alter der Räuber immer näherungsweise ein ganzzahliges Vielfaches der Periodendauer ist. Dies macht auch Sinn, da bei einem großen Anstieg der Bevölkerung viele Einheiten mit dem selben Alter entstehen. Diese Einheiten sterben also auch wieder gemeinsam, was eine Schwingung anregt. Da aber schon während des Sterbens mehr neue Einheiten erschaffen werden (und auch danach noch), ist diese Schwingung alleine betrachtet gedämpft. \\
+	
+	Auffallend bei dem Diagramm ist, dass das maximale Alter der Räuber immer näherungsweise ein ganzzahliges Vielfaches der Periodendauer ist. Dies macht auch Sinn, da bei einem großen Anstieg der Bevölkerung viele Einheiten mit dem selben Alter entstehen. Diese Einheiten sterben also auch wieder gemeinsam, was eine Schwingung anregt. Da aber schon während des Sterbens mehr neue Einheiten erschaffen werden (und auch danach noch), ist diese Schwingung alleine betrachtet gedämpft.
+	
 	Eine weitere besondere Eigenschaft ist, dass bei Anfangswerten, die nicht zu weit vom Gleichgewicht entfernt sind und ohne Aussterben der Beute nie Jäger verhungert sind. 
+	
 	\subsection{Ausblick}
 	Eine sinnvolle Erweiterung der Simulation wäre das Ausweiten auf mehrere Lebensräume. Der Aufbau der Simulation ist bereits darauf ausgelegt, einzig die Regeln für das Wandern zwischen den Lebensräumen müssten definiert und implementiert werden.
 	
+	\newpage	
+	
 	\section{\uppercase{Der zelluläre Automat}}
 	
-	Weiter wird untersucht, ob ein Schwingungsverhalten wie in Abschnitt \ref{sec:Raeuber_Beute} beschrieben, auch bei einem zellulären Automaten zu beobachten ist. Dafür wird ein WATOR System verwendet. Die hier verwendete Implementation ist der Beschreibung aus \cite{Wator} nachempfunden hat aber durchaus auch Ähnlichkeiten mit der Implementation aus \cite{PlanetWator}.
+	Weiter wird untersucht, ob ein Schwingungsverhalten wie in Abschnitt \ref{sec:Raeuber_Beute} beschrieben, auch bei einem zellulären Automaten zu beobachten ist. Dafür wird ein WATOR System verwendet. Die hier verwendete Implementation ist der Beschreibung aus \cite{Wator} nachempfunden hat aber durchaus auch Ähnlichkeiten mit der Implementation aus \cite{PlanetWator}.	
 	
 	\subsection{Implementation}
 	Nachfolgend wird auf die Einzelheiten der Implementation des zellulären Automaten eingegangen, dabei wird die Spezies der Räuber als Haie bezeichnet und die der Beutetiere als Fische.
@@ -254,20 +298,20 @@
 
 	\begin{small}
 	\begin{verbatim}
-		Dezimiere den Brutzeit-Wert des Fisches.
+Dezimiere den Brutzeit-Wert des Fisches.
  		
-		Falls ein leeres angrenzendes Feld existiert:
-		    Bewege auf zufälliges leeres Feld.
+Falls ein leeres angrenzendes Feld existiert:
+  Bewege auf zufälliges leeres Feld.
  			
-		    Falls der Brutzeit-Wert kleiner ist
-		    als die Reproduktionszeit für Fische:
-		        Ein neuer Fisch wird auf einem zufälligen
-		        leeren angrenzenden Feld geboren.
-		        Der Brutzeit-Wert wird auf einen
-		        zufälligen Startwert zurückgesetzt.
+  Falls der Brutzeit-Wert kleiner ist
+  als die Reproduktionszeit für Fische:
+    Ein neuer Fisch wird auf einem zufälligen
+    leeren angrenzenden Feld geboren.
+    Der Brutzeit-Wert wird auf einen neuen
+    zufälligen Startwert zurückgesetzt.
  			
-		sonst:
-		    Bleibe stehen. 		
+sonst:
+  Bleibe stehen. 		
  		
 	\end{verbatim}
 	\end{small}
@@ -277,32 +321,33 @@
 
 	\begin{small}
 	\begin{verbatim}
-		Dezimiere den Brutzeit-Wert des Haies.
+Dezimiere den Brutzeit-Wert des Haies.
 		
-		Falls auf einem angrenzenden Feld ein Fisch existiert:
-		    Gehe auf das Feld mit dem Fisch.
-		    Der Fisch auf diesem Feld stirbt.
-		    Der Fastenzeit-Wert wird auf einen
-		    zufälligen Startwert zurückgesetzt.
+Falls auf einem angrenzenden Feld
+ein Fisch existiert:
+  Gehe auf das Feld mit dem Fisch.
+  Der Fisch auf diesem Feld stirbt.
+  Der Fastenzeit-Wert wird auf einen neuen
+  zufälligen Startwert zurückgesetzt.
 		    
-		Falls ein leeres angrenzendes Feld existiert:
-		    Dezimiere den Fastenzeit-Wert.
-		    Falls der Fastenzeit-Wert kleiner ist als 
-		    die Überlebenszeit ohne Essen:
-		        So stirbt der Hai.
+Falls ein leeres angrenzendes Feld existiert:
+  Dezimiere den Fastenzeit-Wert.
+  Falls der Fastenzeit-Wert kleiner ist als 
+  die Überlebenszeit ohne Essen:
+    So stirbt der Hai.
 		        
-		    sonst:
-		        Gehe auf zufälliges leeres Feld.
+  sonst:
+    Gehe auf zufälliges leeres Feld.
 		        
-		        Falls der Brutzeit-Wert kleiner ist
-		        als die Reproduktionszeit für Haie:
-		            Ein neuer Hai wird auf einem zufälligen
-		            leeren angrenzenden Feld geboren.
-		            Der Brutzeit-Wert wird auf einen
-		            zufälligen Startwert zurückgesetzt.
+    Falls der Brutzeit-Wert kleiner ist
+    als die Reproduktionszeit für Haie:
+      Ein neuer Hai wird auf einem zufälligen
+      leeren angrenzenden Feld geboren.
+      Der Brutzeit-Wert wird auf einen neuen
+      zufälligen Startwert zurückgesetzt.
 		
-		sonst:
-		    Bleibe stehen. 
+sonst:
+  Bleibe stehen. 
 		
 	\end{verbatim}
 	\end{small}
@@ -335,15 +380,20 @@
 
 	\newpage
 
-	\subsection{Schlussfolgerungen}
-	bla bla bla
-
-	\section{\uppercase{Fazit}}
-
+	\subsection{Fazit}
+	Das Modell zeigt Schwingungsverhalten. Wobei aber kleinste Änderungen der Konstanten sowie der Anfangswerte großen Einfluss auf das Ergebnis haben. Ein gleichmäßiges Schwingungsverhalten zeigt sich jeweils nur durch geschicktes Wählen der Variablen. Dabei können die gleichen Konstanten für eine größere oder kleinere Matrix nicht mehr funktionieren, somit ist also die Größe der Umgebung durchaus maßgeblich für ein stabiles Gleichgewicht der beiden Spezies.
+	
+	In den beschriebenen Versuchen wurde bisher nur gezeigt, dass die Wator-Simulation durchaus ein ähnliches Verhalten zeigt wie das klassische Räuber-Beute Modell oder das agentenbasierte Modell. Wobei sich aber bei einer leeren Umgebung keine weiteren Vorteile zeigen. Dies würde sich ändern sobald nicht mehr nur eine leere Umgebung betrachtet wird. So könnten zum Beispiel räumliche Grenzen wie Inseln oder Wasserstraßen miteinbezogen werden.
+	
+	\newpage
+	
 	\vfill
 	\bibliographystyle{apalike}
 	{\small
 	\bibliography{literatur}}
+	
+	\section*{Quellcode}
+	Der gesamte Quellcode der beschrieben Simulationen ist unter https://git.io/vNc4o offen zugänglich.
 
 \end{document}	
 
