@@ -5,19 +5,26 @@
 \usepackage{amssymb}
 
 \begin{document}
-
+	
+	Gleichgewichtszustand für Wale:
 	\begin{flalign*}
-		\textrm{Konzept: } & \\
-		\textrm{Beute: } \qquad &
-		a_{n+1} = a_{n} + r_{a} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) a_{n} + l_{a}~\alpha~a_{n}~b_{n}  \\
-		\textrm{Räuber: } \qquad &
-		b_{n+1} = b_{n} + r_{b} \left( 1 - \frac{a_{n} + b_{n}}{K} \right) b_{n} + l_{b}~\alpha~a_{n}~b_{n}  \\
-		\textrm{Klassisch: } & \\
-		\textrm{Beute: } \qquad &
-		k = \frac{a_{n}+b_{n}}{K}  \\
-		& r^{*}_{a} = r_{a} + l_{b}b_{n}  \\
-		& a_{n+1} = a_{n} + r^{*}_{a}(1-k)a_{n}  \\
-		& a_{n+1} = a_{n} + (r_{a} + l_{b}b_{n})(1-k)a_{n} = a_{n} + r_{a}(1-k)a_{n} + l_{b}(1-k)a_{n}b_{n} \\
+		0 &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v \\
+		r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w &= l_w \cdot \alpha \cdot w \cdot v \\
+		1 - \frac{w}{K} - \frac{v}{K} &= \frac{l_w \cdot \alpha \cdot w \cdot v}{r_w \cdot w} = \frac{l_w \cdot \alpha \cdot v}{r_w} \\
+		\frac{w}{K} &= 1 - \frac{l_w \cdot \alpha \cdot v}{r_w} - \frac{v}{K} \\
+		w &= \frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot v - v \cdot r_w}{r_w} \stackrel{\substack{\textrm{für}\\v=0}}{=} \frac{K \cdot r_w}{r_w} = K \\
+	\end{flalign*}
+	
+	Gleichgewicht mit der \(\beta\)-Erweiterung:
+	\begin{flalign*}
+		0 &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w \\
+		0 &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) + l_w \cdot \alpha \cdot v - \beta \\
+		r_w \cdot \left(1 - \frac{w+v}{K} \right) &= l_w \cdot \alpha \cdot v - \beta \\
+		1 - \frac{w}{K} - \frac{v}{K} &= \frac{l_w \cdot \alpha \cdot v - \beta}{r_w} \\
+		\frac{w}{K} &= 1 - \frac{l_w \cdot \alpha \cdot v - \beta}{r_w} - \frac{v}{K} \\
+		w &= K - K \left( \frac{l_w \cdot \alpha \cdot v - \beta}{r_w} \right) - \frac{K \cdot v}{K} \\
+		w &= \frac{K \cdot r_w - K \cdot l_w \cdot \alpha \cdot v + K \cdot \beta - v \cdot r_w}{r_w} \\
+		&\stackrel{\substack{\textrm{für}\\v=0}}{=} \frac{K \cdot r_w + K \cdot \beta}{r_w} = K \left( \frac{r_w + \beta}{r_w} \right) = K \left( 1 + \frac{\beta}{r_w} \right)
 	\end{flalign*}
 
 \end{document}	

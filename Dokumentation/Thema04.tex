@@ -113,8 +113,6 @@
 
 	Für \(E=\frac{r}{2}\) ist der Schnittpunkt zwischen Zuwachs und Ertrag genau im Maximum der Zuwachsfunktion. Für \(E=\frac{r}{3}\) hingegen leicht daneben, somit wird hierfür das Maximum nicht erreicht.
 	
-	\newpage	
-	
 	\section{\uppercase{Räuber und Beute}}\label{sec:Raeuber_Beute}
 	
 	Zusätzlich zu den Walen wird eine weitere Spezies betrachtet, welche in Wechselwirkung mit den Walen steht, beispielsweise Plankton. Zur Vereinfachung werden im nachfolgenden Text die Population der Wale als Räuber \(w(t)\) und das Plankton als Beute \(v(t)\) bezeichnet. Die Population beider Arten verhält sich wie in Abschnitt \ref{sec:Wachstumsgleichung} beschrieben, wobei jedoch das Populationsmaximum jeweils von der Summe beider Arten abhängt:
@@ -125,6 +123,8 @@
 
 	Dabei beschreibt der Faktor \(r_v\) die Reproduktionsrate der Beute (positives Vorzeichen) und der Faktor \(r_w\) die Sterberate der Räuber (negatives Vorzeichen), denn diese verhungern falls sie kein Futter finden.
 
+	\newpage
+
 	Nun stehen diese zwei Arten miteinander in Wechselwirkung. Dabei beschreibt der Faktor \(\alpha\) die Wahrscheinlichkeit einer Begegnung. Dieser ist einzig von der Gestalt des Biotops anhängig und für beide Arten gleich. Zusätzlich beschreibt die Konstante \(l_{v}\) wie viele Beutetiere bei der Begegnung gefressen werden (negatives Vorzeichen) und die Konstante \(l_{w}\) wie stark sich die Räuber nach der Mahlzeit vermehren (positives Vorzeichen). Mit diesen zusätzlichen Variablen ergeben sich folgende Gleichungen:
 	 \begin{align*}
 		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v \\
@@ -133,28 +133,64 @@
 
 	Werden diese zwei Gleichungen mit der allgemein bekannten Lotka-Volterra Gleichung \cite{PredatorPrey} Seite 3 verglichen, ist leicht zu erkennen, dass diese damit identisch sind.
 
-	\newpage
-
 	Wie man in Abbildung \ref{fig:beute_raeuber_oszillation} erkennen kann, ist mit entsprechenden Parametern ein Schwingungsverhalten zu beobachten. Wobei die Phasen der Schwingungen der beiden Arten jeweils verschoben sind.
 	
-	Parameter benennen...
-
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=5.5cm]{Diagramme/beute_raeuber_oszillation.png}
-  		\caption{Population von Räuber und Beute als Funktion der Zeit.}
+  		\caption{Population von Räuber und Beute als Funktion der Zeit mit \(r_w = r_v = l_v = l_w = 0.2; \alpha = 0.001\).}
   		\label{fig:beute_raeuber_oszillation}
+	\end{figure}
+	
+	Um die Gleichgewichtspunkte der Gleichung für die Räuber zu untersuchen, setzen wir die Ableitung \(\dot{w}\) gleich null:
+	\begin{align*}
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v &\stackrel{!}{=} 0\\
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) + l_w \cdot \alpha \cdot v &= 0\\
+		\frac{l_w \cdot \alpha \cdot v}{r_w} &= 1 - \frac{w}{K}-\frac{v}{K}\\
+		\frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot v - v \cdot r_w}{r_w} &= w
+	\end{align*}
+	
+	Sei nun \(v=0\), so gilt für den Gleichgewichtspunkt der Räuber:
+	\begin{align*}
+		w = \frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot 0 - 0 \cdot r_w}{r_w} = \frac{K \cdot r_w}{rw} = K
+	\end{align*}
+	
+	Um mehr Kontrolle über diesen Gleichgewichtspunkt zu erhalten, wird die Gleichung um einen weiteren Proportionalitätsfaktor \( \beta \) erweitertet:
+	 \begin{align*}
+		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w
+	\end{align*}
+	
+	\noindent
+	Damit gilt für den Gleichgewichtspunkt:
+	\begin{align*}
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v - \beta \cdot w &\stackrel{!}{=} 0\\
+		\frac{K \cdot r_w - K \cdot l_w \cdot \alpha \cdot v + K \cdot \beta - v \cdot r_w}{r_w} &= w
+	\end{align*}
+	
+	\noindent
+	Womit wiederum für \(v=0\) gilt:
+	\begin{align*}
+		w = \frac{K \cdot r_w + K \cdot \beta}{r_w} = K \left( \frac{r_w + \beta}{r_w} \right) = K \left( 1 + \frac{\beta}{r_w} \right)
+	\end{align*}
+	
+	Es existiert weiterhin ein Gleichgewichtspunkt, welcher neu aber auch von \(r_w\) und \(\beta\) abhängt.
+	
+	Wie in Abbildung \ref{fig:beute_raeuber_oszillation_mit_b} zu sehen ist, kann die neue Gleichung mit geeigneten Parametern genauso zum Schwingen gebracht werden.
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=5.5cm]{Diagramme/beute_raeuber_oszillation_mit_b.png}
+  		\caption{Schwingungsverhalten der erweiterten Gleichungen mit \(r_v=0.178; r_w=0.169; l_v=0.106; l_w=0.261; \alpha = 0.001; \beta = 0.021; \).}
+  		\label{fig:beute_raeuber_oszillation_mit_b}
 	\end{figure}
 	
 	\newpage
 	
 	\section{\uppercase{Agentenbasierte Modellierung}}
 	
-	\newpage
 	In der agentenbasierten Modellierung werden Gleichungen im Gegensatz zur analytischen Modellierung mit einzelnen Individuen gelöst.
-	Damit können zusätzlich reel auftretende Effekte wie Überalterung oder ein Mindestalter zur Fortpflanzung berücksichtigt werden.\\
-	Wir haben unser agentenbasiertes Modell speziell auf den Beute-Räuber Effekt angewendet, da dieser Effekt analytisch nur schwer zu
-	lösen ist und Effekte wie Überalterung dort eine wichtige Rolle spielen. Die Individuen erhalten durch ihr Alter spezielle Eigenschaften:
+	Damit können zusätzlich real auftretende Effekte wie Überalterung oder ein Mindestalter zur Fortpflanzung berücksichtigt werden.\\
+	Das agentenbasiertes Modell wurde speziell auf den Beute-Räuber Effekt angewendet, da dieser Effekt analytisch nur schwer zu lösen ist und Effekte wie Überalterung dort eine wichtige Rolle spielen. Die Individuen erhalten durch ihr Alter spezielle Eigenschaften:
 	\begin{itemize}
 		\item Hat das Individuum das maximale Alter überschritten, stirbt es. Es isst also nicht mehr und ist nicht in der Lage, sich Fortzupflanzen.
 		\item Ist das Individuum unter einem gewissen Alter, wird es bei der Fortpflanzung nicht berücksichtigt, es frisst aber die normale Menge.
@@ -167,18 +203,23 @@
 	$$\dot{v} = r_v \cdot \left(1-\frac{w_{lebend} + v_{lebend}}{K}\right)\cdot v_{erwachsen} - k$$
 
 	\subsection{Implementation}
-	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, der ihr Alter angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.\\
-	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde auf meinem Laptop. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte ich die Rechenzeit für die selben Werte auf 52s reduzieren. \\
-	Die verwendeten Rechenregeln sind nicht streng deterministisch. Die Auswahl der Tiere, die gefressen werden, erfolgt rein zufällig. Darum kann er beim erneuten Ausführen der Simulation zu minimal unterschiedlichen Ergebnissen führen. Link zu der Simulation finden Sie in unserem Github.
-	\keywords{bla bla}
+	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, der ihr Alter angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
+	
+	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte die Rechenzeit für die selben Werte auf 52s reduziert werden.
+	
+	Die verwendeten Rechenregeln sind nicht streng deterministisch. Die Auswahl der Tiere, die gefressen werden, erfolgt rein zufällig. Darum kann es, beim erneuten Ausführen der Simulation, zu minimal unterschiedlichen Ergebnissen führen. Den Code zur Simulation ist auf dem GitHub Repository \cite{GitHub} zu finden.
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=5.5cm]{Diagramme/agent_model_oscillation.png}
+  		\caption{bla bla bla.}
+  		\label{fig:agent_model_oscillation}
+	\end{figure}
 	\subsection{Ergebnis}
 	In dem im Diagramm dargestellten Beispiel sieht man eine ungebremste Schwingung. Diese tritt nur in sehr kleinen Wertebereichen auf. Meistens ist die Schwingung gedämpft und pendelt sich auf einen festen Wert ein. Im dargestellten Ergebnis wurden 45\% der Beute aufgefressen und 55\% starben am Alter.\\
 	Auffallend bei den Diagrammen ist, dass das maximale Alter der Räuber immer näherungsweise ein ganzzahliges Vielfaches der Periodendauer ist. Dies macht auch Sinn, da bei einem großen Anstieg der Bevölkerung viele Einheiten mit dem selben Alter entstehen. Diese Einheiten sterben also auch wieder gemeinsam, was eine Schwingung anregt. Da aber schon während des Sterbens mehr neue Einheiten erschaffen werden (und auch danach noch), ist diese Schwingung alleine betrachtet gedämpft. \\
-	Eine weitere besondere Eigenschaft ist, dass bei Anfangswerten, die nicht zu weit vom Gleichgewicht entfernt sind, und ohne Aussterben der Beute nie Jäger verhungert sind. 
+	Eine weitere besondere Eigenschaft ist, dass bei Anfangswerten, die nicht zu weit vom Gleichgewicht entfernt sind und ohne Aussterben der Beute nie Jäger verhungert sind. 
 	\subsection{Ausblick}
-	Bis zur Präsentation möchte ich noch mehrere Lebensräume mit unterschiedlichen Eigenschaften, zwischen denen die Tiere wandern können, einbauen. Der Aufbau der Simulation lässt dies zu, allerdings fehlte mir die Zeit, die Regeln für das wandern zwischen Lebensräumen zu definieren und zu implementieren. Dafür wollen wir auch paralleles Rechnen in mehreren Threads verwenden, was unter anderem ein Grund ist, warum wir Python für diese Simulation verwendet haben.\\
-	
-	\newpage
+	Eine sinnvolle Erweiterung der Simulation wäre das Ausweiten auf mehrere Lebensräume. Der Aufbau der Simulation ist bereits darauf ausgelegt, einzig die Regeln für das Wandern zwischen den Lebensräumen müssten definiert und implementiert werden.
 	
 	\section{\uppercase{Der zelluläre Automat}}
 	
