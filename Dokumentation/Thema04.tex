@@ -187,24 +187,39 @@
 	\newpage
 	
 	\section{\uppercase{Agentenbasierte Modellierung}}
-
-	\begin{figure}[!h]
-  		\centering
- 		\includegraphics[width=5.5cm]{Diagramme/agent_model_start.png}
-  		\caption{bla bla bla.}
-  		\label{fig:agent_model_start}
-	\end{figure}
 	
-	\newpage
+	In der agentenbasierten Modellierung werden Gleichungen im Gegensatz zur analytischen Modellierung mit einzelnen Individuen gelöst.
+	Damit können zusätzlich real auftretende Effekte wie Überalterung oder ein Mindestalter zur Fortpflanzung berücksichtigt werden.\\
+	Das agentenbasiertes Modell wurde speziell auf den Beute-Räuber Effekt angewendet, da dieser Effekt analytisch nur schwer zu lösen ist und Effekte wie Überalterung dort eine wichtige Rolle spielen. Die Individuen erhalten durch ihr Alter spezielle Eigenschaften:
+	\begin{itemize}
+		\item Hat das Individuum das maximale Alter überschritten, stirbt es. Es isst also nicht mehr und ist nicht in der Lage, sich Fortzupflanzen.
+		\item Ist das Individuum unter einem gewissen Alter, wird es bei der Fortpflanzung nicht berücksichtigt, es frisst aber die normale Menge.
+		\item Jedes Individuum zwischen dem Mindestalter zur Fortpflanzung und dem maximalen Alter frisst (als Räuber) andere Tiere und ist in der Lage, sich fortzupflanzen.
+	\end{itemize}
+	Die Menge der gefressenen Tiere $k$ wird wie wie bei den allgemeinen Formeln zum Beute-Räuber Modell bestimmt:
+	$$k = l_v\cdot \alpha \cdot w_{lebend} \cdot v_{lebend}$$
+	Bei der Fortpflanzung gelten auch die selben Formeln wie beim Beute-Räuber Modell, allerdings werden dabei nur die erwachsenen Individuen betrachtet. Außerdem wird das Verhungern von Tieren durch Einführung einer Menge $\beta$, die jedes Tier in einer Zeiteinheit zum Überleben fressen muss, berücksichtigt:
+	$$\dot{w} = -r_w \cdot \left(1-\frac{w_{lebend} + v_{lebend}}{K}\right)\cdot w_{erwachsen} + l_v\cdot \alpha \cdot v_{lebend}\cdot w_{lebend} - \beta \cdot w_{lebend}$$
+	$$\dot{v} = r_v \cdot \left(1-\frac{w_{lebend} + v_{lebend}}{K}\right)\cdot v_{erwachsen} - k$$
 
+	\subsection{Implementation}
+	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, der ihr Alter angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
+	
+	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte die Rechenzeit für die selben Werte auf 52s reduziert werden.
+	
+	Die verwendeten Rechenregeln sind nicht streng deterministisch. Die Auswahl der Tiere, die gefressen werden, erfolgt rein zufällig. Darum kann es, beim erneuten Ausführen der Simulation, zu minimal unterschiedlichen Ergebnissen führen. Den Code zur Simulation ist auf dem GitHub Repository \cite{GitHub} zu finden.
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=5.5cm]{Diagramme/agent_model_oscillation.png}
   		\caption{bla bla bla.}
   		\label{fig:agent_model_oscillation}
 	\end{figure}
-
-	\newpage
+	\subsection{Ergebnis}
+	In dem im Diagramm dargestellten Beispiel sieht man eine ungebremste Schwingung. Diese tritt nur in sehr kleinen Wertebereichen auf. Meistens ist die Schwingung gedämpft und pendelt sich auf einen festen Wert ein. Im dargestellten Ergebnis wurden 45\% der Beute aufgefressen und 55\% starben am Alter.\\
+	Auffallend bei den Diagrammen ist, dass das maximale Alter der Räuber immer näherungsweise ein ganzzahliges Vielfaches der Periodendauer ist. Dies macht auch Sinn, da bei einem großen Anstieg der Bevölkerung viele Einheiten mit dem selben Alter entstehen. Diese Einheiten sterben also auch wieder gemeinsam, was eine Schwingung anregt. Da aber schon während des Sterbens mehr neue Einheiten erschaffen werden (und auch danach noch), ist diese Schwingung alleine betrachtet gedämpft. \\
+	Eine weitere besondere Eigenschaft ist, dass bei Anfangswerten, die nicht zu weit vom Gleichgewicht entfernt sind und ohne Aussterben der Beute nie Jäger verhungert sind. 
+	\subsection{Ausblick}
+	Eine sinnvolle Erweiterung der Simulation wäre das Ausweiten auf mehrere Lebensräume. Der Aufbau der Simulation ist bereits darauf ausgelegt, einzig die Regeln für das Wandern zwischen den Lebensräumen müssten definiert und implementiert werden.
 	
 	\section{\uppercase{Der zelluläre Automat}}
 	
