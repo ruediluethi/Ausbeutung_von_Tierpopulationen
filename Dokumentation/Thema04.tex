@@ -165,7 +165,7 @@
 	
 	Das agentenbasiertes Modell wurde speziell auf den Beute-Räuber Effekt angewendet, da dieser Effekt analytisch nur schwer zu lösen ist und Effekte wie Überalterung dort eine wichtige Rolle spielen. Die Individuen erhalten durch ihr Alter spezielle Eigenschaften:
 	\begin{itemize}
-		\item Hat das Individuum das maximale Alter überschritten, stirbt es. Es isst also nicht mehr und ist nicht in der Lage, sich Fortzupflanzen. Die Anzahl der Tiere welche durch überschreiten der Altersgrenze sterben werden nachfolgend mit \(w_{zu~alt}\) bezeichnet.
+		\item Hat das Individuum das maximale Alter überschritten, stirbt es. Es isst also nicht mehr und ist nicht in der Lage, sich fortzupflanzen. Die Anzahl der Tiere welche durch Überschreiten der Altersgrenze sterben, werden nachfolgend mit \(w_{zu~alt}\) bezeichnet.
 		\item Ist das Individuum unter einem gewissen Alter, wird es bei der Fortpflanzung nicht berücksichtigt, es frisst aber die normale Menge.
 		\item Jedes Individuum zwischen dem Mindestalter zur Fortpflanzung und dem maximalen Alter frisst (als Räuber) andere Tiere und ist in der Lage, sich fortzupflanzen. Die Anzahl dieser Tiere wird nachfolgend als \(w_{erw}\) oder \(v_{erw}\) bezeichnet.
 	\end{itemize}
@@ -181,16 +181,17 @@
 		\dot{v} &= +r_v \cdot \left(1 - \frac{w+v}{K} \right) \cdot v_{erw} - l_v \cdot \alpha \cdot w_{erw} \cdot v
 	\end{align*}
 	
-		Somit wird eine Tierart durch folgende Konstanten definiert:\\
-	Maximales Alter: Überschreitet das individuelle Alter des Tieres diesen Wert, so stirbt es.\\
-	Erwachsenenalter: Sobald das Tier diesen Alterswert erreicht hat, kann es sich fortpflanzen. \\
-	\(l_w\) (nur Räuber): Reproduktionsrate nach einem Mahl.\\
-	\(\beta\) (nur Räuber): Sterberate durch Umwelteinflüsse. \\
-	\(r_v\) (nur Beute): Reproduktionsrate. \\
-	\(l_v\) (nur Beute): Sterberate durch gefressen werden. \\
-
+		Somit wird eine Tierart durch folgende Konstanten definiert:
+	\begin{itemize}
+	\item Maximales Alter: Überschreitet das individuelle Alter des Tieres diesen Wert, so stirbt es.\\
+	\item Erwachsenenalter: Sobald das Tier diesen Alterswert erreicht hat, kann es sich fortpflanzen. \\
+	\item \(l_w\) (nur Räuber): Reproduktionsrate nach einem Mahl.
+	\item \(\beta\) (nur Räuber): Sterberate durch Umwelteinflüsse.
+	\item \(r_v\) (nur Beute): Reproduktionsrate.
+	\item \(l_v\) (nur Beute): Sterberate durch gefressen werden.
+	\end{itemize}
 	\subsection{Implementation}
-	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, welcher der Zeitpunkt ihrer Geburt angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
+	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, welcher den Zeitpunkt ihrer Geburt angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
 	
 	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte die Rechenzeit für die selben Werte auf 52s reduziert werden.
 	
@@ -202,9 +203,9 @@ Für jeden Zeitschritt:
   Erhöhe die aktuelle Zeit um delta_t
 
   Für jede Tierart:
-    Für alle Tiere wo die Differenz von der 
+    Für alle Tiere bei denen die Differenz der
     aktuellen Zeit zum Geburtszeitpunkt größer
-    ist als das maximale Alter der Tierart:
+    als das maximale Alter der Tierart ist:
       Das Tier stirbt.
 
     w = Anzahl der Tiere der Tierart.
