@@ -19,12 +19,14 @@ class adult_checker:
         return True if not self.species.reproduction_age else \
             self.time-entity.born >= self.species.reproduction_age
 
-if __name__ == '__main__':
-    a = 11
-    b = 1.3
-    t = 0
-    for n in range(1000):
-        t += increase_by_factor(a,b)
+    def get_adult_count(self, animals):
+        n = 0
+        for a in animals[::-1]:
+            if not self.is_adult(a):
+                n += 1
+            else:
+                break
+        return len(animals)-n
 
-    print(t/1000)
+
 

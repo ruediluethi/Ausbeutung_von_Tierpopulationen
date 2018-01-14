@@ -1,0 +1,43 @@
+{
+  "animals": [
+    {
+      "id": 0,
+      "name": "Blauwal",
+      "maximum_age": 100,
+      "reproduction": 0.0000,
+      "reproduction_age": 15,
+      "food": {
+        "id": 1,
+        "l_w": 0.02,
+        "l_v": 0.008,
+        "base_need": 0.09
+      }
+    },
+    {
+      "id": 1,
+      "name": "Plankton",
+      "maximum_age": 15,
+      "reproduction": 6,
+      "reproduction_age": 2
+    }
+  ],
+  "cells": [
+    {
+      "id": 0,
+      "X": 0,
+      "Y": 0,
+      "meeting": 0.0001,
+      "limit": 100000,
+      "start_population": [
+        {
+          "id": 0,
+          "amount": 70000
+        },
+        {
+          "id": 1,
+          "amount": 20000
+        }
+      ]
+    }
+  ]
+}

@@ -3,21 +3,26 @@
 This XML defines the animals in the calculated world
 -->
 
-<simulation duration="1000" delta="0.4">
+<simulation duration="100" delta="0.4">
+
     <species name="Blauwal">
-        <maximum_age age="500"/>
-        <reproduction_age age="10"/>
+        <maximum_age age="100"/>
+        <reproduction_age age="15"/>
         <reproduction r="0.4"/>
-        <food name="Plankton" amount="1"/>
+        <food name="Plankton" amount="0.1"/>
     </species>
     <species name="Plankton">
-        <maximum_age age="20"/>
+        <maximum_age age="50"/>
         <reproduction_age age="2"/>
         <reproduction r="0.4"/>
     </species>
+
+
     <cell x="0" y="0">
         <limit K="100000"/>
+        <meeting factor="0.001"/>
         <inhabitant name="Blauwal" amount="100"/>
+        <inhabitant name="Plankton" amount="200"/>
     </cell>
 </simulation>
 
