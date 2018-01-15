@@ -57,7 +57,7 @@ ylabel('Anzahl Tiere');
 
 fig = gcf;
 fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 5.5];
+fig.PaperPosition = [0 0 7 7];
 print(['../Dokumentation/Diagramme/wachstum_ohne_einfluesse.png'],'-dpng','-r300');
 
 

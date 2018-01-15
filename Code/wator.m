@@ -27,7 +27,7 @@ M = zeros(map_size,map_size,4); % fish on level 1, sharks on level 2, level 3 is
 
 % create random fish/shark cells
 square_size = 1;
-
+%{
 for i = [1:3]
 
     rand_x = randi(map_size-square_size*2)+square_size;
@@ -44,10 +44,10 @@ for i = [1:3]
     M(rand_x,rand_y,3) = 1;
 
 end
-
+%}
+%M(map_size/2,map_size/2,1) = 1;
 
 % create some random fish
-%{
 for t = [1:map_size]
     rand_x = randi(map_size);
     rand_y = randi(map_size);
@@ -69,7 +69,6 @@ for t = [1:map_size]
     M(rand_x,rand_y,2) = shark_breed_time + (1-shark_breed_time)*rand();
     M(rand_x,rand_y,3) = shark_starve_time + (1-shark_starve_time)*rand();
 end
-%}
 
 
 fish_amount = [map_size];
@@ -260,6 +259,10 @@ for t = [0:100000]
         %g = 0.5;
         %b = 0.5;
         
+        round(r*256)
+        round(g*256)
+        round(b*256)
+        
         % blood color (only for visual effect)
         br = 0.8;
         bg = 0;
@@ -272,8 +275,9 @@ for t = [0:100000]
         for x = [1:map_size]
             for y = [1:map_size]
                 
-                blood_value = M(x,y,4);
-                blood_value = cos(blood_value*pi+pi)/2+0.5; % more contrast
+                %blood_value = M(x,y,4);
+                %blood_value = cos(blood_value*pi+pi)/2+0.5; % more contrast
+                blood_value = 0;
                 tr = r + (br-r)*blood_value;
                 tg = g + (bg-r)*blood_value;
                 tb = b + (bb-r)*blood_value;
@@ -296,9 +300,9 @@ for t = [0:100000]
             end
         end
     
-        subplot(1,2,1);
+        %subplot(1,2,1);
         image(output);
-        %imwrite(output,['/Users/ruedi/Outputs/wator_image_',num2str(img_counter),'.png']);
+        imwrite(output,['/Users/ruedi/Outputs/wator_image_',num2str(img_counter),'.png']);
         img_counter = img_counter+1;
         
         cycles(end+1) = t/3;
@@ -313,7 +317,7 @@ for t = [0:100000]
         ylabel('population');
         %}
         
-        subplot(1,2,2);
+        %subplot(1,2,2);
         plot(cycles,fish_amount,'k',cycles,shark_amount,'k--');
         axis([ min(cycles) max(cycles) 0 max(max(fish_amount),max(shark_amount)) + min(min(fish_amount),min(shark_amount)) ]);
         legend('Fische','Haie');
@@ -324,7 +328,7 @@ for t = [0:100000]
         fig = gcf;
         fig.PaperUnits = 'centimeters';
         fig.PaperPosition = [0 0 7 7];
-        %print(['/Users/ruedi/Outputs/wator_diagram_',num2str(img_counter),'.png'],'-dpng','-r300');
+        print(['/Users/ruedi/Outputs/wator_diagram_',num2str(img_counter),'.png'],'-dpng','-r300');
         
         %subplot(1,3,3);
         %plot(fish_amount,shark_amount,'k');

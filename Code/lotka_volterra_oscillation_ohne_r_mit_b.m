@@ -24,7 +24,7 @@ for j = [1:16]
     v = [100];
     w = [100];
 
-    delta_t = .001;
+    delta_t = .01;
     duration = 1000;
     t = 1:duration/delta_t;
     for i = [t(1):t(end-1)]
