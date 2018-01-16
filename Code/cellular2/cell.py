@@ -70,7 +70,7 @@ class Cell:
     def add_animals(self, animal_id, animals: List['int']):
         a = self.animals[animal_id]
         a.extend(animals)
-        self.animals[animal_id] = sorted(a)
+        self.animals[animal_id] = sorted(a, reverse=True)
 
     def kill_old(self, animal_id: int):
         a = self.animals[animal_id]

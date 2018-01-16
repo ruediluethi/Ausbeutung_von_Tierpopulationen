@@ -8,16 +8,16 @@
       "reproduction_age": 15,
       "food": {
         "id": 1,
-        "l_w": 0.02,
-        "l_v": 0.008,
-        "base_need": 0.09
+        "l_w": 1.5,
+        "l_v": 0.325,
+        "base_need": 1
       }
     },
     {
       "id": 1,
       "name": "Plankton",
       "maximum_age": 15,
-      "reproduction": 6,
+      "reproduction": 10,
       "reproduction_age": 2
     }
   ],
@@ -26,16 +26,33 @@
       "id": 0,
       "X": 0,
       "Y": 0,
-      "meeting": 0.0001,
-      "limit": 100000,
+      "meeting": 0.0005,
+      "limit": 10000,
       "start_population": [
         {
           "id": 0,
-          "amount": 70000
+          "amount": 7000
         },
         {
           "id": 1,
-          "amount": 20000
+          "amount": 2000
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "X": 0,
+      "Y": 1,
+      "meeting": 0.0003,
+      "limit": 10000,
+      "start_population": [
+        {
+          "id": 0,
+          "amount": 6000
+        },
+        {
+          "id": 1,
+          "amount": 4000
         }
       ]
     }
