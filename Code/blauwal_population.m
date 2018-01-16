@@ -45,7 +45,7 @@ for i = [t(1):t(end-1)]
     ypop2(end+1) = ypop2(end) + (ypop_change(end) - ypop_yield2(end))*delta_t; % xn + Zuwachs - Ertrag
 end
 
-%subplot(2,2,1);
+subplot(2,2,1);
 plot(t*delta_t,pop,'k',t*delta_t,pop_change*10,'k:');
 axis([ 0 duration*delta_t/2 0 K ]);
 %title('Entwicklung der Population ohne äussere Einflüsse');
@@ -55,10 +55,10 @@ legend('Location','northoutside');
 xlabel('Zeit');
 ylabel('Anzahl Tiere');
 
-fig = gcf;
-fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 7];
-print(['../Dokumentation/Diagramme/wachstum_ohne_einfluesse.png'],'-dpng','-r300');
+%fig = gcf;
+%fig.PaperUnits = 'centimeters';
+%fig.PaperPosition = [0 0 7 7];
+%print(['../Dokumentation/Diagramme/wachstum_ohne_einfluesse.png'],'-dpng','-r300');
 
 
 dy = @(y) r.*(1-(y./K)).*y; % Veränderung der Population (ohne Einflüsse)
@@ -73,6 +73,7 @@ max_yield2 = yield_from_pop2(max_pop2);
 
 y = [1:K];
 
+subplot(2,2,2);
 plot(y,dy(y),'k',y,yield_from_pop1(y),'k--',y,yield_from_pop2(y),'k:',[max_pop2],[max_yield2],'ok',[max_pop1],[max_yield1],'ok');
 legend('Zuwachs','Ertrag für E=r/2','Ertrag für E=r/3','Schnittpunkte Zuwachs / Ertrag');
 legend('boxoff');
@@ -80,23 +81,15 @@ legend('Location','northoutside');
 xlabel('Population');
 ylabel('Zuwachs / Ertrag');
 
-fig = gcf;
-fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 7];
-print(['../Dokumentation/Diagramme/zuwachs_ertrag_zu_population.png'],'-dpng','-r300');
+%fig = gcf;
+%fig.PaperUnits = 'centimeters';
+%fig.PaperPosition = [0 0 7 7];
+%print(['../Dokumentation/Diagramme/zuwachs_ertrag_zu_population.png'],'-dpng','-r300');
 
-%{
-subplot(2,2,3);
-plot(t*delta_t,ypop,[1,duration],[max_pop,max_pop],'k');
-axis([ 0 duration*delta_t 0 K ]);
-title(['Entwicklung der Population mit Fangintensität r/',num2str(1/(E/r))]);
-legend('Population',['Max: ',num2str(round(max_pop))]);
-legend('Location','northwest');
-xlabel('Zeit');
-ylabel('Anzahl Tiere');
-%}
+
 
 % für E1
+subplot(2,2,3);
 plot(t*delta_t,ypop_change,'k',t*delta_t,ypop_yield1,'k--',t*delta_t,ypop_change-ypop_yield1,'k:');
 legend('Zuwachs','Ertrag',['Differenz von Ertrag und Zuwachs']);
 legend('boxoff');
@@ -104,13 +97,14 @@ legend('Location','northoutside');
 xlabel('Zeit');
 ylabel('Anzahl Tiere');
 
-fig = gcf;
-fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 7];
-print(['../Dokumentation/Diagramme/zuwachs_etrag_auf_zeit1.png'],'-dpng','-r300');
+%fig = gcf;
+%fig.PaperUnits = 'centimeters';
+%fig.PaperPosition = [0 0 7 7];
+%print(['../Dokumentation/Diagramme/zuwachs_etrag_auf_zeit1.png'],'-dpng','-r300');
 
 
 %für E2
+subplot(2,2,4);
 plot(t*delta_t,ypop_change,'k',t*delta_t,ypop_yield2,'k--',t*delta_t,ypop_change-ypop_yield2,'k:');
 legend('Zuwachs','Ertrag',['Differenz von Ertrag und Zuwachs']);
 legend('boxoff');
@@ -118,10 +112,10 @@ legend('Location','northoutside');
 xlabel('Zeit');
 ylabel('Anzahl Tiere');
 
-fig = gcf;
-fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 7];
-print(['../Dokumentation/Diagramme/zuwachs_etrag_auf_zeit2.png'],'-dpng','-r300');
+%fig = gcf;
+%fig.PaperUnits = 'centimeters';
+%fig.PaperPosition = [0 0 7 7];
+%print(['../Dokumentation/Diagramme/zuwachs_etrag_auf_zeit2.png'],'-dpng','-r300');
 
 
 
