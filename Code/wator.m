@@ -1,19 +1,13 @@
 clear;
 close all;
 
+% display setup
 cycle_time = 1;
 cycles = [0];
 max_shown_cycles = 500/cycle_time;
+show_blood = 0; % visual effect, colors the water in red if a shark eats a fish
 
-%map_size = 256;
-
-%fish_lifetime_speed = 0.05;
-%fish_breed_time = 0.7;
-
-%shark_lifetime_speed = 0.025;
-%shark_breed_time = 0.8;
-%shark_starve_time = 0.2;
-
+% simulation setup
 map_size = 128;
 
 fish_lifetime_speed = 0.1;
@@ -23,11 +17,12 @@ shark_lifetime_speed = 0.05;
 shark_breed_time = 0.5;
 shark_starve_time = 0.2;
 
+% create empty matrix
 M = zeros(map_size,map_size,4); % fish on level 1, sharks on level 2, level 3 is for shark starve time, level 4 for blood particle
 
 % create random fish/shark cells
+%{
 square_size = 1;
-
 for i = [1:3]
 
     rand_x = randi(map_size-square_size*2)+square_size;
@@ -44,10 +39,10 @@ for i = [1:3]
     M(rand_x,rand_y,3) = 1;
 
 end
-
+%}
+%M(map_size/2,map_size/2,1) = 1;
 
 % create some random fish
-%{
 for t = [1:map_size]
     rand_x = randi(map_size);
     rand_y = randi(map_size);
@@ -69,21 +64,20 @@ for t = [1:map_size]
     M(rand_x,rand_y,2) = shark_breed_time + (1-shark_breed_time)*rand();
     M(rand_x,rand_y,3) = shark_starve_time + (1-shark_starve_time)*rand();
 end
-%}
 
-
+% vectors for the plot
 fish_amount = [map_size];
 shark_amount = [map_size];
 img_counter = 1;
 
-for t = [0:100000]
+for t = [0:100000] % tictac
     
-    M_new = zeros(map_size,map_size,4);
+    M_new = zeros(map_size,map_size,4); % create new empty matrix for the new values
     
     % first calc fish
     if mod(t,3) == 0
         
-        for x = randperm(map_size) % random series used instead of [1:map_size]
+        for x = randperm(map_size) % random series used instead of [1:map_size], creates more noize
             for y = randperm(map_size)
 
                 if M(x,y,1) > 0
@@ -116,7 +110,7 @@ for t = [0:100000]
                             end
                         end
                     else
-                        disp('ERROR fish can not move');
+                        disp('ERROR fish can not move'); % should not happen, because the current position is already in the empty_fields array
                     end
                 else
                     M(x,y,1) = 0; % cap the value always to 0
@@ -205,7 +199,7 @@ for t = [0:100000]
         end
         
         
-    else % do blood
+    else % do blood (is only a visual effect, has no influence to the simulation)
         
         M(:,:,4) = M(:,:,4)*0.98;
         
@@ -215,14 +209,12 @@ for t = [0:100000]
                 M_new(x,y,2) = M(x,y,2); % copy the shark values
                 M_new(x,y,3) = M(x,y,3);
                 
-                % blood flow
-                %blood_value = M(x,y,4) / 5;
-                
                 l = mod(x-2,length(M))+1;
                 r = mod(x,length(M))+1;
                 u = mod(y-2,length(M))+1;
                 d = mod(y,length(M))+1;
                 
+                % diffusion effect
                 diffuse_factor = 0.1;
                 blood_value = M(x,y,4);
                 blood_value = blood_value + (M(l,y,4) - M(x,y,4))*diffuse_factor;
@@ -231,18 +223,11 @@ for t = [0:100000]
                 blood_value = blood_value + (M(x,d,4) - M(x,y,4))*diffuse_factor;
                 
                 M_new(x,y,4) = blood_value;
-                
-                %M_new(x,y,4) = M_new(x,y,4) + blood_value;
-                %M_new(l,y,4) = M_new(l,y,4) + blood_value;
-                %M_new(r,y,4) = M_new(r,y,4) + blood_value;
-                %M_new(x,u,4) = M_new(x,u,4) + blood_value;
-                %M_new(x,d,4) = M_new(x,d,4) + blood_value;
             end
         end
     end
     
-    M = M_new;
-    
+    M = M_new; % overwrite the matrix with the new one
     
     if mod(t,cycle_time*3) == 2
         
@@ -272,8 +257,13 @@ for t = [0:100000]
         for x = [1:map_size]
             for y = [1:map_size]
                 
-                blood_value = M(x,y,4);
-                blood_value = cos(blood_value*pi+pi)/2+0.5; % more contrast
+                blood_value = 0;
+                
+                if show_blood == 1
+                    blood_value = M(x,y,4);
+                    blood_value = cos(blood_value*pi+pi)/2+0.5; % add more contrast
+                end
+                
                 tr = r + (br-r)*blood_value;
                 tg = g + (bg-r)*blood_value;
                 tb = b + (bb-r)*blood_value;
@@ -304,15 +294,7 @@ for t = [0:100000]
         cycles(end+1) = t/3;
         fish_amount(end+1) = count_fish;
         shark_amount(end+1) = count_sharks;
-        
-        %{
-        subplot(1,3,2);
-        plot(cycles,fish_amount,cycles,shark_amount);
-        legend('fishes','sharks');
-        xlabel('cycles');
-        ylabel('population');
-        %}
-        
+
         subplot(1,2,2);
         plot(cycles,fish_amount,'k',cycles,shark_amount,'k--');
         axis([ min(cycles) max(cycles) 0 max(max(fish_amount),max(shark_amount)) + min(min(fish_amount),min(shark_amount)) ]);
@@ -321,15 +303,11 @@ for t = [0:100000]
         legend('Location','northoutside');
         xlabel('Zyklen');
         ylabel('Anzahl Tiere');
-        fig = gcf;
-        fig.PaperUnits = 'centimeters';
-        fig.PaperPosition = [0 0 7 7];
+        %fig = gcf;
+        %fig.PaperUnits = 'centimeters';
+        %fig.PaperPosition = [0 0 7 7];
         %print(['/Users/ruedi/Outputs/wator_diagram_',num2str(img_counter),'.png'],'-dpng','-r300');
         
-        %subplot(1,3,3);
-        %plot(fish_amount,shark_amount,'k');
-        %xlabel('fishes');
-        %ylabel('sharks');
         
         % cut the diagram to max_shown_cycles
         if length(cycles) > max_shown_cycles

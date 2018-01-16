@@ -28,6 +28,7 @@ for i = [t(1):t(end-1)]
     
 end
 
+subplot(1,2,1);
 plot(t*delta_t,w,'k',t*delta_t,v,'k--');
 legend('Räuber','Beute');
 legend('boxoff');
@@ -35,11 +36,12 @@ legend('Location','northoutside');
 xlabel('Zeit');
 ylabel('Anzahl Tiere');
 
-fig = gcf;
-fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 7];
-print(['../Dokumentation/Diagramme/beute_raeuber_oszillation.png'],'-dpng','-r300');
+%fig = gcf;
+%fig.PaperUnits = 'centimeters';
+%fig.PaperPosition = [0 0 7 7];
+%print(['../Dokumentation/Diagramme/beute_raeuber_oszillation.png'],'-dpng','-r300');
 
+subplot(1,2,2);
 plot(w,v,'k');
 legend('Räuber Beute Korrelation');
 legend('boxoff');
@@ -47,7 +49,7 @@ legend('Location','northoutside');
 xlabel('Räuber');
 ylabel('Beute');
 
-fig = gcf;
-fig.PaperUnits = 'centimeters';
-fig.PaperPosition = [0 0 7 7];
-print(['../Dokumentation/Diagramme/beute_raeuber_korrelation.png'],'-dpng','-r300');
+%fig = gcf;
+%fig.PaperUnits = 'centimeters';
+%fig.PaperPosition = [0 0 7 7];
+%print(['../Dokumentation/Diagramme/beute_raeuber_korrelation.png'],'-dpng','-r300');

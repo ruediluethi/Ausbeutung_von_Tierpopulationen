@@ -64,6 +64,8 @@
 		\dot{y} &= r \cdot\left(1-\frac{y}{K}\right) \cdot y - E \cdot y
 	\end{align*}	
 	
+	\newpage	
+	
 	Anschließend wird die neue Gleichung in die Form der Anfangsgleichung gebracht:
 		
 	\begin{align*}
@@ -183,8 +185,8 @@
 	
 		Somit wird eine Tierart durch folgende Konstanten definiert:
 	\begin{itemize}
-	\item Maximales Alter: Überschreitet das individuelle Alter des Tieres diesen Wert, so stirbt es.\\
-	\item Erwachsenenalter: Sobald das Tier diesen Alterswert erreicht hat, kann es sich fortpflanzen. \\
+	\item Maximales Alter: Überschreitet das individuelle Alter des Tieres diesen Wert, so stirbt es.
+	\item Erwachsenenalter: Sobald das Tier diesen Alterswert erreicht hat, kann es sich fortpflanzen.
 	\item \(l_w\) (nur Räuber): Reproduktionsrate nach einem Mahl.
 	\item \(\beta\) (nur Räuber): Sterberate durch Umwelteinflüsse.
 	\item \(r_v\) (nur Beute): Reproduktionsrate.
@@ -194,6 +196,8 @@
 	Die agentenbasierte Simulation wurde mit Python 3.6 umgesetzt. Die einzelnen Einheiten wurden dabei durch einen einzigen Gleitkommawert, welcher den Zeitpunkt ihrer Geburt angibt, in einem sortierten Array für jede Tierart repräsentiert. Alle Konstanten können in einem json-File angepasst werden und es können auch weitere Tierarten ohne zusätzlichen Programmieraufwand hinzugefügt werden. Die Ergebnisse der Simulation wurden als CSV-Datei abgespeichert und in Matlab visualisiert.
 	
 	In einer ersten Version waren alle Tiere noch in einem unsortierten Array und jedes Tier war Instanz einer extra entworfenen Klasse. Diese Methode war aber relativ langsam und  Berechnungen mit bis zu 100.000 Tieren über 3000 Zeitschritte dauerten etwa eine Stunde. Mit der Optimierung über ein sortiertes Array und Darstellung der Tiere als Gleitkommazahl konnte die Rechenzeit für die selben Werte auf 52s reduziert werden.
+	
+	\newpage	
 	
 	Die in Abschnitt \ref{sec:Ergebnis_Agent_Model} besprochenen Ergebnisse sind mittels folgendem durch Pseudocode beschriebenen Verhaltens entstanden:
 	
@@ -209,9 +213,9 @@ Für jeden Zeitschritt:
       Das Tier stirbt.
 
     w = Anzahl der Tiere der Tierart.
-    w_erw = Anzahl Tiere bei denen die 
-    Summe von Geburtstermin plus Erwachsenenalter 
-    größer ist als die aktuelle Zeit.
+    w_erw = Anzahl Tiere bei denen die Differenz der
+    aktuellen Zeit zum Geburtszeitpunkt größer
+    als das Erwachsenenalter der Tierart ist.
 
     Ist die Tierart ein Räuber:
       v = Anzahl der Beutetiere.
@@ -222,7 +226,7 @@ Für jeden Zeitschritt:
       delta_pop = lw*alpha*w_erw*v - beta*w.
 
     Ist die Tierart ein Beutetier:
-      delta_pop = rv*(1-(Total aller Tiere/K))*v_erw.
+      delta_pop = rv*(1-(Total aller Tiere/K))*w_erw.
 
     Ist delta_pop positiv:
       Für jedes neugeborene Tier:
@@ -230,7 +234,8 @@ Für jeden Zeitschritt:
         die aktuelle Zeit als Geburtstermin 
         wird gespeichert.
 
-    Ist die Veränderung in der Population negativ:
+    Ist die Veränderung in der
+    Population negativ:
       Für jedes sterbende Tier:
         Ein zufälliges Tier stirbt.	
  		

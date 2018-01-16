@@ -1,0 +1,223 @@
+\documentclass[a4paper,twoside]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{calc}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{pslatex}
+\usepackage{apalike}
+\usepackage{enumitem}
+\usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
+
+\newcommand{\team}{Jannik Simon Münz, Ruedi Lüthi}
+\newcommand{\theme}{Ausbeutung von Tierpopulationen}
+\setcounter{page}{1}
+
+\subfigtopskip=0pt
+\subfigcapskip=0pt
+\subfigbottomskip=0pt
+
+\begin{document}
+
+	\title{Ausbeutung von Tierpopulationen\subtitle{Wachstumsgleichungen im Vergleich zu einer\\agentenbasierten Modulation und einem zellulären Automaten} }
+	
+	\author{\authorname{Jannik Simon Münz und Ruedi Lüthi}}
+
+	\section{\uppercase{Wachstumsgleichung}}
+	\noindent Definition der Konstanten:
+	\begin{flalign*}
+		y(t) &:= \textrm{Population zum Zeitpunkt }t & \\
+		r &:= \textrm{Wachstumsfaktor} & \\
+		K &:= \textrm{Umweltkapazität} &
+	\end{flalign*}
+	Differentialgleichung zum logistischen Wachstum:
+	\begin{align*}
+		y(t+\Delta t) &= y(t) + r\cdot\left(1-\frac{y(t)}{K}\right) \cdot y(t) \cdot \Delta t \\
+		%&= \left(1 + r\cdot\left(1-\frac{y(t)}{K}\right) \cdot \Delta t \right) \cdot y(t)
+		\frac{y(t+\Delta t) - y(t)}{\Delta t} &= r \cdot\left(1-\frac{y(t)}{K}\right) \cdot y(t) \\
+		\dot{y} &= r \cdot\left(1-\frac{y}{K}\right) \cdot y \\
+	\end{align*}
+
+	\noindent Erweiterung durch die Fangintensität \(E\):
+	\begin{align*}
+		%y(t+\Delta t) &= y(t) + r \cdot \left(1-\frac{y(t)}{K}\right) \cdot y(t) \cdot \Delta t - E \cdot y(t) \cdot \Delta t \\
+		%&= \left(1+r \cdot \left(1-\frac{y(t)}{K}\right)\cdot \Delta t - E \cdot \Delta t \right) \cdot y(t)
+		\dot{y} &= r \cdot\left(1-\frac{y}{K}\right) \cdot y - \underbrace{E \cdot y}_{\textrm{Ertrag}}
+	\end{align*}	
+	
+	\noindent Umstellen auf die Form der Anfangsgleichung:		
+	\begin{align*}
+		%&= \left(1+r \cdot \left(\underbrace{1 - \frac{E}{r}}_{\textrm{ausklammern}} - \frac{y(t)}{K} \right) \cdot \Delta t \right) \cdot y(t) \\		
+		%&= \left(1+\underbrace{r \cdot \left( 1 - \frac{E}{r} \right)}_{\tilde{r}} \cdot \left(1 - \frac{y(t)}{\underbrace{K \cdot \left( 1 - \frac{E}{r} \right)}_{\tilde{K}}} \right) \cdot \Delta t \right) \cdot y(t) \\		
+		\dot{y} &= \left( r \cdot\left(1 - \frac{y}{K}\right) - E\right) \cdot y \\
+		&= r \cdot \left( 1 - \frac{E}{r} - \frac{y}{K} \right) \cdot y \\
+		&= \underbrace{r \cdot \left( 1 - \frac{E}{r} \right)}_{\tilde{r}} \cdot \left( 1 - \frac{y}{\underbrace{K \cdot \left(1 - \frac{E}{r}\right)}_{\tilde{K}}} \right) \cdot y
+	\end{align*}
+	
+	\noindent Stabiles Gleichgewicht bei: \(y = \tilde{K} = K \cdot \left(1 - \frac{E}{r}\right) \)
+	
+	\noindent Maximaler Ertrag \(= E \cdot \underbrace{K \cdot \left(1 - \frac{E}{r}\right)}_{=y}\) 
+	
+	\noindent Optimales \(E\) wird gefunden, durch das lösen der Maximalwertaufgabe der Funktion 
+	\begin{align*}
+		f(E) = E \cdot K \cdot \left(1 - E \cdot \frac{1}{r}\right)
+	\end{align*}
+	Ableiten und gleich null setzen:
+	\begin{align*}
+		&f'(E) = K - 2 \cdot E \cdot \frac{K}{r} = K \left(1 - E \cdot \frac{2}{r} \right) \stackrel{!}{=} 0 \\
+		&\Rightarrow 1 - E \cdot \frac{2}{r} = 0 \Rightarrow E = \frac{r}{2}
+	\end{align*}
+	Maximaler Ertrag für \(E=\frac{r}{2}\):
+	\begin{align*}
+		\frac{r}{2} \cdot K \cdot \left(1 - \frac{r}{2}\cdot\frac{1}{r}\right) = \frac{r \cdot K}{4}
+	\end{align*}
+	
+	\section{\uppercase{Räuber und Beute}}\label{sec:Raeuber_Beute}
+	\noindent Definition der Konstanten:
+	\begin{flalign*}
+		w &:= \textrm{Population der Räuber (zum Zeitpunkt }t\textrm{)} & \\
+		v &:= \textrm{Population der Beute (zum Zeitpunkt }t\textrm{)} & \\
+		r_w &:= \textrm{Sterberate der Räuber} & \\
+		l_w &:= \textrm{Reproduktionsrate der Räuber nach einem Mahl} & \\
+		r_v &:= \textrm{Reproduktionsrate der Beute} & \\
+		l_v &:= \textrm{Sterberate der Beute durch gefressen werden} & \\
+		\alpha &:= \textrm{Wahrscheinlichkeit einer Begegnung}
+	\end{flalign*}
+	 \begin{align*}
+		\dot{w} &= -r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v \\
+		\dot{v} &= +r_v \cdot \left(1 - \frac{w+v}{K} \right) \cdot v - l_v \cdot \alpha \cdot w \cdot v \\
+	\end{align*}
+
+	\noindent Gleichgewicht der Räuber wenn \(\dot{w} \stackrel{!}{=} 0\) gilt:
+	\begin{align*}
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) \cdot w + l_w \cdot \alpha \cdot w \cdot v &\stackrel{!}{=} 0\\
+		-r_w \cdot \left(1 - \frac{w+v}{K} \right) + l_w \cdot \alpha \cdot v &= 0\\
+		\frac{l_w \cdot \alpha \cdot v}{r_w} &= 1 - \frac{w}{K}-\frac{v}{K}\\
+		\frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot v - v \cdot r_w}{r_w} &= w
+	\end{align*}
+	
+	\noindent Sei \(v=0\), so ist \(w\) im Gleichgewichtspunkt:
+	\begin{align*}
+		w = \frac{K \cdot r_w - l_w \cdot \alpha \cdot w \cdot 0 - 0 \cdot r_w}{r_w} = \frac{K \cdot r_w}{rw} = K
+	\end{align*}	
+	
+	
+	
+	\newpage
+	
+	\section{\uppercase{Agentenbasierte Modellierung}}
+		
+	\begin{small}
+	\begin{verbatim}
+Für jeden Zeitschritt:
+  Erhöhe die aktuelle Zeit um delta_t
+
+  Für jede Tierart:
+    Für alle Tiere bei denen die Differenz der
+    aktuellen Zeit zum Geburtszeitpunkt größer
+    als das maximale Alter der Tierart ist:
+      Das Tier stirbt.
+
+    w = Anzahl der Tiere der Tierart.
+    w_erw = Anzahl Tiere bei denen die Differenz der
+    aktuellen Zeit zum Geburtszeitpunkt größer
+    als das Erwachsenenalter der Tierart ist.
+
+    Ist die Tierart ein Räuber:
+      v = Anzahl der Beutetiere.
+      Anzahl gefressener Beutetiere = w*v*alpha*lv
+      Für jedes Beutetier welches gefressen wird:
+        Ein zufälliges Beutetier stirbt.
+            
+      delta_pop = lw*alpha*w_erw*v - beta*w.
+
+    Ist die Tierart ein Beutetier:
+      delta_pop = rv*(1-(Alle Tiere/K))*w_erw.
+
+    Ist delta_pop positiv:
+      Für jedes neugeborene Tier:
+        Ein neues Tier wird geboren und 
+        die aktuelle Zeit als Geburtstermin 
+        wird gespeichert.
+
+    Ist die Veränderung in der
+    Population negativ:
+      Für jedes sterbende Tier:
+        Ein zufälliges Tier stirbt.	
+ 		
+	\end{verbatim}
+	\end{small}
+	
+	\section*{Quellcode}
+	\noindent GitHub: https://git.io/vNc4o	
+	
+	\newpage
+	
+	\section{\uppercase{Zelluläre Automat}}
+	\subsection{Fische}
+	\begin{small}
+	\begin{verbatim}
+Für jeden Zeitschritt:
+  Dezimiere den Brutzeit-Wert des Fisches.
+ 		
+  Falls ein leeres angrenzendes Feld existiert:
+    Bewege auf zufälliges leeres Feld.
+ 			
+    Falls der Brutzeit-Wert kleiner ist
+    als die Reproduktionszeit für Fische:
+      Ein neuer Fisch wird auf einem zufälligen
+      leeren angrenzenden Feld geboren.
+      Der Brutzeit-Wert wird auf einen neuen
+      zufälligen Startwert zurückgesetzt.
+ 			
+  sonst:
+    Bleibe stehen. 		
+ 		
+	\end{verbatim}
+	\end{small}
+	
+	\subsection{Haie}
+	\begin{small}
+	\begin{verbatim}
+Für jeden Zeitschritt:
+  Dezimiere den Brutzeit-Wert des Haies.
+		
+  Falls auf einem angrenzenden Feld
+  ein Fisch existiert:
+    Gehe auf das Feld mit dem Fisch.
+    Der Fisch auf diesem Feld stirbt.
+    Der Fastenzeit-Wert wird auf einen neuen
+    zufälligen Startwert zurückgesetzt.
+		    
+  Falls ein leeres angrenzendes Feld existiert:
+    Dezimiere den Fastenzeit-Wert.
+    Falls der Fastenzeit-Wert kleiner ist als 
+    die Überlebenszeit ohne Essen:
+      So stirbt der Hai.
+		        
+    sonst:
+      Gehe auf zufälliges leeres Feld.
+		        
+      Falls der Brutzeit-Wert kleiner ist
+      als die Reproduktionszeit für Haie:
+        Ein neuer Hai wird auf einem zufälligen
+        leeren angrenzenden Feld geboren.
+        Der Brutzeit-Wert wird auf einen neuen
+        zufälligen Startwert zurückgesetzt.
+		
+  sonst:
+    Bleibe stehen. 
+		
+	\end{verbatim}
+	\end{small}
+	
+
+\end{document}	
+
