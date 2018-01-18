@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside]{article}
+\documentclass[a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
@@ -14,7 +14,7 @@
 \usepackage{pslatex}
 \usepackage{apalike}
 \usepackage{enumitem}
-\usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
+\usepackage{MOSI_handout}     % Please add other packages that you may need BEFORE the MOSI.sty package.
 
 \newcommand{\team}{Jannik Simon Münz, Ruedi Lüthi}
 \newcommand{\theme}{Ausbeutung von Tierpopulationen}
@@ -26,9 +26,14 @@
 
 \begin{document}
 
-	\title{Ausbeutung von Tierpopulationen\subtitle{Wachstumsgleichungen im Vergleich zu einer\\agentenbasierten Modulation und einem zellulären Automaten} }
+	\title{Ausbeutung von Tierpopulationen}
 	
 	\author{\authorname{Jannik Simon Münz und Ruedi Lüthi}}
+	
+	\keywords{Wachstum, Räuber und Beute, agentenbasierte Modellierung, Zellulärer Automat, WATOR}
+	\abstract{In dem nachfolgenden Bericht wird die konkrete Implementation einer agentenbasierten Modellierung sowie die eines zellulären Automaten beschrieben. Dabei werden die Resultate der beiden Modelle mit dem klassischen Räuber-Beute Modell verglichen. Dabei konnte beim Betrachten aller Modelle jeweils immer ein Schwingungsverhalten beobachtet werden.}
+
+	\onecolumn \maketitle \normalsize \vfill
 
 	\section{\uppercase{Wachstumsgleichung}}
 	\noindent Definition der Konstanten:
